@@ -1,0 +1,150 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "custom_text_image_8wjJVK": {
+      "type": "custom-text-image",
+      "name": "Text & Image",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "The PRIÉT way",
+        "text": "<p><br/>Honeymoons, anniversary gifts, and every moment in between, find inspiration to continue your love story, one unforgettable chapter at a time.<br/><br/></p>",
+        "padding_top": 80,
+        "padding_bottom": 0
+      }
+    },
+    "custom_image_grid_B6D4ek": {
+      "type": "custom-image-grid",
+      "blocks": {
+        "column_RKT3JT": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Image_8.png",
+            "heading": "Three iconic Italy cities for the perfect proposal",
+            "text": "From the timeless romance of Venice's canals to the Renaissance beauty of Florence and the golden glow of Rome — discover three iconic Italian cities where saying 'I do' feels like a scene from a love story.",
+            "link_url": ""
+          }
+        },
+        "column_WXyz9E": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Image_9.png",
+            "heading": "5 Destinations for an unforgettable honeymoon!",
+            "text": "Five destinations, countless ways to fall in love all over again. From tranquil island mornings to vibrant city nights, each place invites you to celebrate your story, your way.",
+            "link_url": ""
+          }
+        },
+        "column_4WqWHT": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Image_10.png",
+            "heading": "Saying ‘I Do’ by the Sea!",
+            "text": "Love on the sand, vows by the sea. Discover everything you need for a perfect beach wedding—from breezy décor and sun-kissed tones to local permits and weather tips—so your day shines as bright as the tide.",
+            "link_url": "shopify://pages/article"
+          }
+        }
+      },
+      "block_order": [
+        "column_RKT3JT",
+        "column_WXyz9E",
+        "column_4WqWHT"
+      ],
+      "name": "Bild-Grid Trio",
+      "settings": {
+        "bg_color": "#fbf9ee",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "button_label": "READ MORE"
+      }
+    },
+    "custom_hero_bMzBPg": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "image": "shopify://shop_images/Image_ac45e16b-82ae-4f18-b742-0f847ce18272.png",
+        "height": 80,
+        "overlay_opacity": 0,
+        "heading": "Forever starts here",
+        "subheading": "Discover our exclusive diamond rings",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_newsletter_dUTCeT": {
+      "type": "custom-newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/Mask_group_1.png",
+        "heading": "Get the latest news",
+        "btn_bg": "#fbf9ee",
+        "btn_text": "#1a1a1a",
+        "btn_hover_bg": "#1a1a1a",
+        "btn_hover_text": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_text_image_8wjJVK",
+    "custom_image_grid_B6D4ek",
+    "custom_hero_bMzBPg",
+    "custom_newsletter_dUTCeT"
+  ]
+}

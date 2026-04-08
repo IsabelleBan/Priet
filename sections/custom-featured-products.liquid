@@ -1,0 +1,330 @@
+<div class="custom-featured-products" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="custom-featured-inner-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="custom-featured-products__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="custom-featured-products__grid">
+      {% for block in section.blocks %}
+        {% assign product = block.settings.product %}
+        {% assign card_url = product.url | default: block.settings.link %}
+        
+        <a href="{{ card_url }}" class="custom-featured-products__card" {{ block.shopify_attributes }}>
+          <div class="custom-featured-products__image-wrapper">
+            {% if product != blank and product.featured_image != blank %}
+              {{ product.featured_image | image_url: width: 800 | image_tag:
+                widths: '800',
+                sizes: '400px',
+                class: 'custom-featured-products__image',
+                loading: 'lazy',
+                alt: product.title
+              }}
+            {% elsif block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 800 | image_tag:
+                widths: '800',
+                sizes: '400px',
+                class: 'custom-featured-products__image',
+                loading: 'lazy'
+              }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'custom-featured-products__image placeholder-svg' }}
+            {% endif %}
+          </div>
+
+          <div class="custom-featured-products__info">
+            <h3 class="custom-featured-products__title">
+              {% if product != blank %}{{ product.title | upcase }}{% else %}{{ block.settings.title | upcase }}{% endif %}
+            </h3>
+            <p class="custom-featured-products__price">
+              {% if product != blank %}From {{ product.price_min | money }}{% else %}{{ block.settings.price }}{% endif %}
+            </p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+      <div class="custom-featured-products__footer">
+        <a href="{{ section.settings.button_link }}" class="custom-featured-products__see-more">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+.section-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.custom-featured-inner-container {
+  width: 100%;
+  padding: 0 160px;
+  box-sizing: border-box;
+}
+
+.custom-featured-products {
+  background-color:  #FBF9EE !important;
+  padding: 60px 0 100px !important;
+}
+
+.custom-featured-products__heading {
+  text-align: center;
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 32px;
+  margin-bottom: 50px;
+  color: var(--color-text, #1A1A1A);
+  letter-spacing: 0.04em;
+}
+
+.custom-featured-products__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 30px;  
+  margin: 0 auto;
+}
+
+.custom-featured-products .page-width {
+  max-width: 100% !important; 
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+/* LAPTOP */
+@media screen and (max-width: 1800px) {
+  .custom-featured-inner-container {
+    padding: 0 40px;
+  }
+
+  .custom-featured-products__image-wrapper {
+    height: 400px !important;
+    padding: 30px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .custom-featured-inner-container {
+    padding: 0 40px;
+  }
+
+  .custom-featured-products__image-wrapper {
+    height: 300px !important;
+    padding: 30px;
+  }
+}
+
+/* MOBIL */
+@media screen and (max-width: 989px) {
+  .custom-featured-inner-container {
+    padding: 0;
+  }
+
+  .custom-featured-products__heading {
+    font-size: 24px;
+    padding: 0 20px;
+    margin-bottom: 30px;
+  }
+
+  .custom-featured-products__grid {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    scrollbar-width: none;
+  }
+
+  .custom-featured-products__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-featured-products__card {
+    flex: 0 0 85vw;
+    scroll-snap-align: center;
+    margin: 0 8px;
+    height: auto;
+  }
+
+  .custom-featured-products__card:first-child {
+    margin-left: 20px;
+  }
+
+  .custom-featured-products__card:last-child {
+    margin-right: 20px;
+  }
+
+  .custom-featured-products__image-wrapper {
+    height: 260px;
+    padding: 20px;
+  }
+
+  .custom-featured-products__info {
+    padding: 12px 10px 16px;
+  }
+
+  .custom-featured-products__title {
+    font-size: 14px;
+  }
+
+  .custom-featured-products__price {
+    font-size: 11px;
+  }
+}
+
+.custom-featured-products__card {
+  text-decoration: none;
+  color: var(--color-text, #1A1A1A);
+  display: flex;
+  flex-direction: column;
+  background-color:rgb(248, 248, 248);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  overflow: hidden;
+}
+
+.custom-featured-products__card:hover {
+  transform: translateY(-5px);
+}
+
+.custom-featured-products__image-wrapper {
+  overflow: hidden;
+  background-color:transparent !important;
+  height: 650px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px; 
+}
+
+.custom-featured-products__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.custom-featured-products__card:hover .custom-featured-products__image {
+  transform: scale(1.05);
+}
+
+.custom-featured-products__info {
+  padding: 0 30px 25px 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-featured-products__title {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 18px;
+  margin: 0 0 8px;
+  letter-spacing: 0.03em;
+}
+
+.custom-featured-products__price {
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary, #6B6560);
+  margin: 0;
+}
+
+.custom-featured-products__footer {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.custom-featured-products__see-more {
+  display: inline-block;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text, #1A1A1A);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 0.2s ease;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover our engagement rings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SEE MORE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Jaipur" },
+        { "type": "text", "id": "price", "label": "Price text", "default": "From 17,400 kr" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "product", "id": "product", "label": "Product (optional – overrides fields above)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,162 @@
+<div
+  class="custom-craftsmanship section section--full-width"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="custom-craftsmanship__grid">
+      <div class="custom-craftsmanship__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="custom-craftsmanship__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <div class="custom-craftsmanship__text">{{ section.settings.text }}</div>
+        {% endif %}
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="custom-craftsmanship__button button">
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
+      </div>
+      <div class="custom-craftsmanship__image-wrapper">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 1000 | image_tag:
+            widths: '400, 600, 800, 1000',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            class: 'custom-craftsmanship__image',
+            loading: 'lazy'
+          }}
+        {% else %}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'custom-craftsmanship__image placeholder-svg' }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .custom-craftsmanship {
+    background-color: var(--color-background, #F7F2EA);
+  }
+
+  .custom-craftsmanship__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-craftsmanship__grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .custom-craftsmanship__heading {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-weight: 300;
+    font-size: 36px;
+    margin: 0 0 20px;
+    letter-spacing: 0.03em;
+    color: var(--color-text, #1A1A1A);
+  }
+
+  .custom-craftsmanship__text {
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #6B6560;
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+
+  .custom-craftsmanship__button {
+    display: inline-block;
+    background-color: var(--color-text, #1A1A1A);
+    color: #fff;
+    padding: 14px 40px;
+    text-decoration: none;
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-weight: 300;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .custom-craftsmanship__button:hover {
+    opacity: 0.85;
+  }
+
+  .custom-craftsmanship__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Craftsmanship",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Story, Our Craftsmanship"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>From sketch to sparkle, every ring is a collaboration between your vision and our master jewellers. We use only ethically sourced materials and time-honoured techniques.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Craftsmanship"
+    }
+  ]
+}
+{% endschema %}

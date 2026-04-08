@@ -1,0 +1,584 @@
+
+<div class="custom-cart" id="custom-cart">
+
+  {%- if cart.item_count == 0 -%}
+
+    <div class="custom-cart__empty">
+      <p class="custom-cart__empty-title">Your bag is empty</p>
+      <a href="{{ routes.all_products_collection_url }}" class="custom-cart__continue">Explore our rings</a>
+    </div>
+
+  {%- else -%}
+
+    <div class="custom-cart__inner">
+
+      <h1 class="custom-cart__heading">Shopping Cart</h1>
+
+      <div class="custom-cart__layout">
+
+        <!-- ITEMS -->
+        <div class="custom-cart__items">
+
+          {%- for item in cart.items -%}
+
+            {%- assign is_surcharge = false -%}
+            {%- for p in item.properties -%}
+              {%- if p.first == '_surcharge' and p.last == 'true' -%}
+                {%- assign is_surcharge = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- unless is_surcharge -%}
+
+            <div class="custom-cart__item" data-key="{{ item.key }}">
+
+              <!-- BILD -->
+              <a href="{{ item.url }}" class="custom-cart__item-image-link">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 200 }}"
+                    alt="{{ item.image.alt | escape }}"
+                    width="200"
+                    height="200"
+                    loading="lazy"
+                    class="custom-cart__item-image"
+                  >
+                {%- else -%}
+                  <div class="custom-cart__item-image custom-cart__item-image--placeholder"></div>
+                {%- endif -%}
+              </a>
+
+              <!-- INFO -->
+              <div class="custom-cart__item-info">
+                <a href="{{ item.url }}" class="custom-cart__item-title">{{ item.product.title | upcase }}</a>
+
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="custom-cart__item-variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+
+                <!-- PROPERTIES (döljer properties som börjar med _) -->
+                {%- assign has_props = false -%}
+                {%- for p in item.properties -%}
+                  {%- unless p.first contains '_' or p.last == blank -%}
+                    {%- assign has_props = true -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+
+                {%- if has_props -%}
+                  <ul class="custom-cart__item-props">
+                    {%- for p in item.properties -%}
+                      {%- unless p.first contains '_' or p.last == blank -%}
+                        <li class="custom-cart__item-prop">
+                          <span class="custom-cart__item-prop-key">{{ p.first }}</span>
+                          <span class="custom-cart__item-prop-val">{{ p.last }}</span>
+                        </li>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+
+                <!-- ANTAL -->
+                <div class="custom-cart__item-actions">
+                  <div class="custom-cart__qty">
+                    <button type="button" class="custom-cart__qty-btn" data-action="decrease" data-key="{{ item.key }}">−</button>
+                    <span class="custom-cart__qty-num">{{ item.quantity }}</span>
+                    <button type="button" class="custom-cart__qty-btn" data-action="increase" data-key="{{ item.key }}">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PRIS -->
+              <div class="custom-cart__item-price" id="price-{{ item.key | replace: ':', '-' }}">
+                {{ item.final_line_price | money }}
+              </div>
+
+            </div>
+
+            {%- endunless -%}
+
+          {%- endfor -%}
+
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="custom-cart__summary">
+          <div class="custom-cart__summary-inner">
+
+            <h2 class="custom-cart__summary-heading">Order Summary</h2>
+
+            <div class="custom-cart__summary-rows">
+              <div class="custom-cart__summary-row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">{{ cart.total_price | money }}</span>
+              </div>
+              <div class="custom-cart__summary-row custom-cart__summary-row--muted">
+                <span>VAT included</span>
+                <span id="cart-tax">{{ cart.total_price | times: 0.2 | money }}</span>
+              </div>
+              <div class="custom-cart__summary-row custom-cart__summary-row--shipping">
+                <span>Shipping</span>
+                <span>Complimentary</span>
+              </div>
+            </div>
+
+            <div class="custom-cart__summary-total">
+              <span>Total</span>
+              <span id="cart-total">{{ cart.total_price | money }}</span>
+            </div>
+
+            <a href="/checkout" class="custom-cart__checkout-btn">
+              Proceed to Checkout
+            </a>
+
+            <a href="{{ routes.all_products_collection_url }}" class="custom-cart__continue-link">
+              Continue shopping
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  {%- endif -%}
+
+</div>
+
+<style>
+.custom-cart {
+  background-color: #FBF9EE;
+  min-height: 60vh;
+  padding: 60px 40px 100px;
+  box-sizing: border-box;
+}
+
+.custom-cart__empty {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+.custom-cart__empty-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 36px;
+  color: #1a1a1a;
+  margin: 0 0 32px;
+}
+
+.custom-cart__continue,
+.custom-cart__continue-link {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 0.2s ease;
+  display: inline-block;
+}
+
+.custom-cart__continue:hover,
+.custom-cart__continue-link:hover { opacity: 0.5; }
+
+.custom-cart__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.custom-cart__heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 48px;
+  letter-spacing: 0.03em;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0 0 60px;
+}
+
+.custom-cart__layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 60px;
+  align-items: start;
+}
+
+.custom-cart__items {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-cart__item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 24px;
+  align-items: start;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  transition: opacity 0.2s ease;
+}
+
+.custom-cart__item:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+.custom-cart__item--loading { opacity: 0.4; pointer-events: none; }
+
+.custom-cart__item-image-link { display: block; }
+
+.custom-cart__item-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+}
+
+.custom-cart__item-image--placeholder {
+  width: 120px;
+  height: 120px;
+  background: #f0ede0;
+  border-radius: 4px;
+}
+
+.custom-cart__item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  color: #1a1a1a;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+  transition: opacity 0.2s;
+}
+
+.custom-cart__item-title:hover { opacity: 0.6; }
+
+.custom-cart__item-variant {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.45);
+  margin: 0 0 12px;
+}
+
+.custom-cart__item-props {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.custom-cart__item-prop {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  color: rgba(26,26,26,0.6);
+  display: flex;
+  gap: 6px;
+}
+
+.custom-cart__item-prop-key {
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(26,26,26,0.4);
+  min-width: 80px;
+}
+
+.custom-cart__item-prop-val { color: rgba(26,26,26,0.7); }
+
+.custom-cart__item-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 4px;
+}
+
+.custom-cart__qty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  padding: 6px 12px;
+  background: #fff;
+}
+
+.custom-cart__qty-btn {
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  color: #1a1a1a;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: opacity 0.2s;
+  width: 16px;
+  text-align: center;
+}
+
+.custom-cart__qty-btn:hover { opacity: 0.4; }
+
+.custom-cart__qty-num {
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  min-width: 16px;
+  text-align: center;
+}
+
+.custom-cart__item-price {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  text-align: right;
+  padding-top: 4px;
+  white-space: nowrap;
+}
+
+/* SUMMARY */
+.custom-cart__summary {
+  position: sticky;
+  top: 30px;
+}
+
+.custom-cart__summary-inner {
+  background: #fff;
+  border-radius: 8px;
+  padding: 36px 32px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+}
+
+.custom-cart__summary-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 28px;
+  letter-spacing: 0.03em;
+}
+
+.custom-cart__summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.custom-cart__summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+}
+
+.custom-cart__summary-row--muted {
+  color: rgba(26,26,26,0.45);
+  font-size: 12px;
+}
+
+.custom-cart__summary-row--shipping {
+  font-size: 12px;
+  color: rgba(26,26,26,0.55);
+}
+
+.custom-cart__summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+
+.custom-cart__checkout-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: #1a1a1a;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.custom-cart__checkout-btn:hover { opacity: 0.8; }
+
+.custom-cart__continue-link {
+  display: block;
+  text-align: center;
+  margin-top: 4px;
+}
+
+@media screen and (max-width: 989px) {
+  .custom-cart {
+    padding: 30px 16px 60px;
+  }
+
+  .custom-cart__heading {
+    font-size: 32px;
+    margin-bottom: 36px;
+  }
+
+  .custom-cart__layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .custom-cart__summary { position: static; }
+
+  .custom-cart__item {
+    grid-template-columns: 90px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .custom-cart__item-price {
+    grid-column: 2;
+    text-align: left;
+    padding-top: 0;
+  }
+}
+</style>
+
+<script>
+(function() {
+
+  var SIZE_SURCHARGE_VARIANT_ID = 53104121774423; // samma som i din product-sektion
+
+  function fetchCart() {
+    return fetch('/cart.js').then(function(r) { return r.json(); });
+  }
+
+  function changeItem(key, qty) {
+    return fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    }).then(function(r) { return r.json(); });
+  }
+
+  function addSurcharge(forKey) {
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: SIZE_SURCHARGE_VARIANT_ID,
+        quantity: 1,
+        properties: { '_surcharge': 'true', '_for_key': forKey }
+      })
+    }).then(function(r) { return r.json(); });
+  }
+
+  function formatMoney(cents) {
+    return (cents / 100).toLocaleString('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+      maximumFractionDigits: 0
+    });
+  }
+
+  function updateTotals(cart) {
+    var s = document.getElementById('cart-subtotal');
+    var t = document.getElementById('cart-total');
+    var v = document.getElementById('cart-tax');
+    if (s) s.textContent = formatMoney(cart.total_price);
+    if (t) t.textContent = formatMoney(cart.total_price);
+    if (v) v.textContent = formatMoney(Math.round(cart.total_price * 0.2));
+  }
+
+  function setLoading(itemEl, state) {
+    itemEl.classList.toggle('custom-cart__item--loading', state);
+  }
+
+  // Hitta surcharge-rad kopplad till en viss item key
+  function findSurchargeKey(cart, forKey) {
+    var found = null;
+    cart.items.forEach(function(item) {
+      if (item.properties && item.properties['_for_key'] === forKey && item.properties['_surcharge'] === 'true') {
+        found = item.key;
+      }
+    });
+    return found;
+  }
+
+  // Kolla om en variant-id är en surcharge
+  function isSurchargeVariant(variantId) {
+    return variantId === SIZE_SURCHARGE_VARIANT_ID;
+  }
+
+  document.querySelectorAll('.custom-cart__qty-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var key    = this.getAttribute('data-key');
+      var action = this.getAttribute('data-action');
+      var itemEl = this.closest('.custom-cart__item');
+      var qtyEl  = itemEl.querySelector('.custom-cart__qty-num');
+      var current = parseInt(qtyEl.textContent);
+      var newQty  = action === 'increase' ? current + 1 : current - 1;
+
+      if (newQty < 0) return;
+
+      setLoading(itemEl, true);
+
+      fetchCart().then(function(cart) {
+        var surchargeKey = findSurchargeKey(cart, key);
+
+        if (newQty === 0) {
+          // Ta bort huvudprodukten
+          return changeItem(key, 0).then(function() {
+            // Ta bort surcharge om den finns
+            if (surchargeKey) return changeItem(surchargeKey, 0);
+          }).then(function() {
+            location.reload();
+          });
+        }
+
+        // Uppdatera antal på huvudprodukten
+        return changeItem(key, newQty).then(function(updatedCart) {
+          qtyEl.textContent = newQty;
+          updateTotals(updatedCart);
+          setLoading(itemEl, false);
+
+          // Synka surcharge: ska alltid vara 1 oavsett antal ringar
+          // (varje ring har sin egen surcharge-rad med _for_key)
+          // Inget att göra här – surcharge är alltid qty 1 per rad
+        });
+      });
+    });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Cart",
+  "settings": []
+}
+{% endschema %}

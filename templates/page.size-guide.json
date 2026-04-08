@@ -1,0 +1,117 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "custom_story_RUw7Tb": {
+      "type": "custom-story",
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Our Story",
+        "text": "<p>Every piece of Priét jewellery is crafted with care, passion and generations of expertise. We believe that fine jewellery should tell a story — your story.</p>",
+        "button_label": "Read more",
+        "button_link": "",
+        "image": "shopify://shop_images/Frame_21160.png",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_text_image_tLFzgP": {
+      "type": "custom-text-image",
+      "name": "Text & Image",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "Size guide",
+        "text": "<p>Finding the perfect engagement or wedding ring starts with finding the right size. That's why our experts have created a complete guide with a size chart and practical tips for measuring at home. For extra precision, we also offer rings and size bands. </p>",
+        "padding_top": 80,
+        "padding_bottom": 0
+      }
+    },
+    "custom_ring_size_guide_jKn3E4": {
+      "type": "custom-ring-size-guide",
+      "name": "Ring Size Guide",
+      "settings": {
+        "heading": "",
+        "subtext": "",
+        "padding_top": 44,
+        "padding_bottom": 80
+      }
+    },
+    "custom_newsletter_RWNXzc": {
+      "type": "custom-newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/Mask_group_1.png",
+        "heading": "Get the latest news",
+        "btn_bg": "#fbf9ee",
+        "btn_text": "#1a1a1a",
+        "btn_hover_bg": "#1a1a1a",
+        "btn_hover_text": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_story_RUw7Tb",
+    "custom_text_image_tLFzgP",
+    "custom_ring_size_guide_jKn3E4",
+    "custom_newsletter_RWNXzc"
+  ]
+}

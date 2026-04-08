@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap');
+
+:root {
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Jost', sans-serif;
+  --color-background: #F7F2EA;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #6B6560;
+  --color-accent: #C9A96E;
+}
+
+/* ========================================
+   GENERELLT — Font overrides med !important
+   ======================================== */
+body {
+  font-family: 'Jost', sans-serif !important;
+  font-weight: 300;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.03em;
+}
+
+/* ========================================
+   HERO — Ta bort overlay-text och knapp
+   ======================================== */
+.banner__content {
+  display: none !important;
+}
+
+/* ========================================
+   ANNOUNCEMENT BAR
+   ======================================== */
+.header-announcements,
+.announcement-bar,
+.utility-bar,
+[class*="announcement"] {
+  background-color: #1A1A1A !important;
+  color: #F7F2EA !important;
+  font-family: 'Jost', sans-serif !important;
+  font-weight: 300;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+.header-announcements *,
+.announcement-bar *,
+.utility-bar *,
+[class*="announcement"] * {
+  color: #F7F2EA !important;
+}
+
+/* ========================================
+   OUR COLLECTION — Centrera rubrik, vita kort
+   ======================================== */
+   
+/* Centrera sektionsrubriken */
+.collection-list-wrapper .title,
+.collection-list-wrapper .section-header,
+.collection-list-wrapper h2,
+[class*="collection-list"] h2,
+.collection-list-title {
+  text-align: center !important;
+}
+
+/* Ta bort grå bakgrund, gör kort vita med tunn border */
+.collection-list-wrapper .collection-card,
+.collection-list-wrapper .card,
+.collection-card,
+[class*="collection-list"] .card,
+[class*="collection-list"] .collection-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(26, 26, 26, 0.1) !important;
+  box-shadow: none !important;
+  padding: 24px !important;
+  border-radius: 0 !important;
+}
+
+/* Our categories — kort bakgrund */
+.collection-list__item .card__inner,
+.collection-list__item .card,
+.collection-list__item .media,
+.collection-list__item .card__media,
+.card--collection .card__inner,
+.card-wrapper .card__inner,
+.scroll-trigger .card__inner,
+[data-section-type="featured-collection"] .card__inner,
+[data-section-type="collection-list"] .card__inner {
+  background-color: #EEEADF !important;
+}
+
+.collection-list__item {
+  background-color: #EEEADF !important;
+}
+
+/* Ta bort "Collection title" chip/badge */
+.collection-card__badge,
+.collection-card__caption,
+.collection-card .badge,
+.collection-card .card__badge,
+[class*="collection"] .badge,
+.collection-card__title-wrapper .subtitle {
+  display: none !important;
+}
+
+/* ========================================
+   PRODUCTS — Centrera rubrik, transparent bakgrund
+   ======================================== */
+
+/* Centrera sektionsrubriken */
+.product-grid-wrapper .title,
+.product-grid-wrapper .section-header,
+.product-grid-wrapper h2,
+[class*="product-grid"] h2,
+.featured-collection h2,
+.featured-collection .section-header,
+.featured-collection .title {
+  text-align: center !important;
+}
+
+/* Ta bort grå bakgrund och box-shadow från produktkort */
+.product-card,
+.product-card-wrapper .card,
+.product-grid .card,
+[class*="product-grid"] .card,
+.featured-collection .card,
+.card-product {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Border-bottom under produktnamn */
+.product-card__title,
+.card-product__title,
+.card__title,
+.product-card .card__heading,
+[class*="product-card"] .card__heading {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.08) !important;
+  padding-bottom: 8px !important;
+}
+
+/* ========================================
+   KNAPPAR
+   ======================================== */
+.button,
+button[class*="button"],
+a[class*="button"],
+.shopify-challenge__button {
+  border-radius: 0 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+/* Override Horizon theme color scheme backgrounds with crème */
+.color-scheme-1,
+.color-scheme--1 {
+  --color-background-rgb: 247, 242, 234;
+}
+
+/* ========================================
+   HEADER NAV
+   ======================================== */
+.header__nav a,
+.header__menu-item {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+.footer h2,
+.footer h3,
+.footer h4 {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+}
+
+/* ========================================
+   PRODUKTKORT TYPOGRAFI
+   ======================================== */
+.product-card__title,
+.product-card__price {
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+/* Atmospheric CTA section */
+.hero--atmospheric-cta .hero__content-wrapper {
+  text-align: center;
+}
+
+/* ========================================
+   FORMULÄR
+   ======================================== */
+.newsletter input[type="email"] {
+  font-family: var(--font-body);
+  font-weight: 300;
+  border-radius: 0;
+}
+
+input, textarea, select {
+  font-family: var(--font-body);
+  font-weight: 300;
+  border-radius: 0 !important;
+}

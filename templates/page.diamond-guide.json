@@ -1,0 +1,366 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "custom_hero_JUC6Fh": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "image": "shopify://shop_images/Image_3.png",
+        "height": 80,
+        "overlay_opacity": 45,
+        "heading": "Forever starts here",
+        "subheading": "Discover our exclusive diamond rings",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_story_jPCXEe": {
+      "type": "custom-story",
+      "blocks": {
+        "diamond_factor_FzAybA": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/12.png",
+            "factor_title": "CUT",
+            "factor_text": "Determines how light is reflected and is the most important parameter to keep in mind."
+          }
+        },
+        "diamond_factor_FNc86p": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/2.png",
+            "factor_title": "Color",
+            "factor_text": "Describes the color of a diamond. The scale is letters between letters D-Z."
+          }
+        },
+        "diamond_factor_ATg938": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/4.png",
+            "factor_title": "CARAT",
+            "factor_text": "A unit of weight for diamonds. One carat is equal to 200 miligrams."
+          }
+        },
+        "diamond_factor_Ei3dmc": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/15.png",
+            "factor_title": "clarity",
+            "factor_text": "Describes the absence of number of inclusions, their location, size and origin."
+          }
+        }
+      },
+      "block_order": [
+        "diamond_factor_FzAybA",
+        "diamond_factor_FNc86p",
+        "diamond_factor_ATg938",
+        "diamond_factor_Ei3dmc"
+      ],
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "The 4 C's",
+        "text": "<p>A diamond is graded based on four parameters known as the 4 C's. Together, they determine the appearance and pricing of a diamond. Read on to learn more about the 4 Cs.<br/><br/></p>",
+        "button_label": "Learn more",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_story_kXNaDA": {
+      "type": "custom-story",
+      "blocks": {
+        "diamond_factor_nHfWpP": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/Vector_1_1.png",
+            "factor_title": "TOO DEEP",
+            "factor_text": "TOO DEEP"
+          }
+        },
+        "diamond_factor_kFbQhg": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/Vector_1.png",
+            "factor_title": "TOO SHALLOW",
+            "factor_text": "TOO SHALLOW"
+          }
+        },
+        "diamond_factor_DLM8M7": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/15.png",
+            "factor_title": "PERFECT",
+            "factor_text": "PERFECT"
+          }
+        }
+      },
+      "block_order": [
+        "diamond_factor_nHfWpP",
+        "diamond_factor_kFbQhg",
+        "diamond_factor_DLM8M7"
+      ],
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "The cut",
+        "text": "<p>The cut of a diamond describes the quality of its facets, that is, the different parts of a diamond. The cut is the most important factor in determining the brilliance of a diamond, a good cut can brighten and sparkle, while a poorly cut diamond can appear lifeless and dark. It is about not cutting the diamond too shallow, or too deep. All diamond shapes have different ideal dimensions.</p>",
+        "button_label": "Learn more",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_story_Gp7X7W": {
+      "type": "custom-story",
+      "blocks": {
+        "diamond_factor_bjwBW8": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/5_2.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_rYMtNk": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/5_1.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_kk8tcP": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/5.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_38bCkg": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/4_1.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        }
+      },
+      "block_order": [
+        "diamond_factor_bjwBW8",
+        "diamond_factor_rYMtNk",
+        "diamond_factor_kk8tcP",
+        "diamond_factor_38bCkg"
+      ],
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "The color",
+        "text": "<p>White diamonds naturally vary in colour, ranging from the extremely rare, colourless stones to warm white diamonds with a soft yellow tint. The subtle differences in hue are caused by trace amounts of nitrogen present during the diamond’s formation deep within the earth.<br/><br/>To classify these variations, the industry uses a colour grading scale of 23 shades, assigning each diamond a letter from D (colourless) to Z (light yellow). Among them, D-colour diamonds are the most coveted for their exceptional purity and rarity.<br/><br/></p>",
+        "button_label": "Learn more",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_story_mJRTnT": {
+      "type": "custom-story",
+      "blocks": {
+        "diamond_factor_RcXxUb": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/Vector_2.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_HFX3h8": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/Vector_1_39aedfb6-7b8e-466d-887e-3913bbd40e80.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        }
+      },
+      "block_order": [
+        "diamond_factor_RcXxUb",
+        "diamond_factor_HFX3h8"
+      ],
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "Our Story",
+        "text": "<p>Every piece of Priét jewellery is crafted with care, passion and generations of expertise. We believe that fine jewellery should tell a story — your story.</p>",
+        "button_label": "Learn more",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_story_CWWCJR": {
+      "type": "custom-story",
+      "blocks": {
+        "diamond_factor_MttqVz": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/11.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_CjC3bV": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/11.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_apJqib": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/11.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        },
+        "diamond_factor_TNgFYd": {
+          "type": "diamond_factor",
+          "settings": {
+            "vector_icon": "shopify://shop_images/11.png",
+            "factor_title": "CUT",
+            "factor_text": "Describes the quality..."
+          }
+        }
+      },
+      "block_order": [
+        "diamond_factor_MttqVz",
+        "diamond_factor_CjC3bV",
+        "diamond_factor_apJqib",
+        "diamond_factor_TNgFYd"
+      ],
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Our Story",
+        "text": "<p>Every piece of Priét jewellery is crafted with care, passion and generations of expertise. We believe that fine jewellery should tell a story — your story.</p>",
+        "button_label": "Learn more",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_story_bWLpeU": {
+      "type": "custom-story",
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "Lab grown or natural diamond?",
+        "text": "<p><strong>Lorem Ipsum</strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
+        "button_label": "Read more",
+        "button_link": "",
+        "image": "shopify://shop_images/Image_f1f17483-fa1d-456d-8103-e370ce4b1468.png",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_storyleft_xQMDWx": {
+      "type": "custom-storyleft",
+      "name": "Our Story – Image Left",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Always certified diamonds",
+        "text": "<p><strong>Lorem Ipsum</strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br/><br/></p>",
+        "button_label": "Read more",
+        "button_link": "",
+        "image": "shopify://shop_images/Image_3c532409-b1cb-42e6-b692-13d751eb12d0.png",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_story_KYH7xz": {
+      "type": "custom-story",
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "Sustainability & Ethics",
+        "text": "<p>Every piece of Priét jewellery is crafted with care, passion and generations of expertise. We believe that fine jewellery should tell a story — your story.</p>",
+        "button_label": "Read more",
+        "button_link": "",
+        "image": "shopify://shop_images/Skarmbild_2026-03-25_144102.png",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_hero_JUC6Fh",
+    "custom_story_jPCXEe",
+    "custom_story_kXNaDA",
+    "custom_story_Gp7X7W",
+    "custom_story_mJRTnT",
+    "custom_story_CWWCJR",
+    "custom_story_bWLpeU",
+    "custom_storyleft_xQMDWx",
+    "custom_story_KYH7xz"
+  ]
+}

@@ -1,0 +1,148 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "custom_faq_xP7t3w": {
+      "type": "custom-faq",
+      "blocks": {
+        "faq_item_AgBqU6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Your question here",
+            "answer": "<p><strong>Lorem Ipsum</strong>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br/><br/></p>"
+          }
+        },
+        "faq_item_6qxQdz": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Your question here",
+            "answer": "<p>Your answer here</p>"
+          }
+        },
+        "faq_item_tnrLez": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Your question here",
+            "answer": "<p>Your answer here</p>"
+          }
+        },
+        "faq_item_HFfPap": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Your question here",
+            "answer": "<p>Your answer here</p>"
+          }
+        },
+        "faq_item_Nthit6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Your question here",
+            "answer": "<p>Your answer here</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_AgBqU6",
+        "faq_item_6qxQdz",
+        "faq_item_tnrLez",
+        "faq_item_HFfPap",
+        "faq_item_Nthit6"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "heading": "FAQ",
+        "subtext": "Have a question? Find all the answers you need in our FAQ section.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "custom_story_pAt4YK": {
+      "type": "custom-story",
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Let us guide you step by step.",
+        "text": "<p>Behind every ring lies a story of art, precision and emotion. Discover the journey of how we bring your forever ring to life.</p>",
+        "button_label": "Read more",
+        "button_link": "shopify://pages/contact",
+        "image": "shopify://shop_images/Image.jpg",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_newsletter_6PC3mw": {
+      "type": "custom-newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/Mask_group_1.png",
+        "heading": "Get the latest news",
+        "placeholder": "EMAIL ADDRESS",
+        "button_text": "JOIN",
+        "subtext": "By subscribing you agree to our privacy policy.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_faq_xP7t3w",
+    "custom_story_pAt4YK",
+    "custom_newsletter_6PC3mw"
+  ]
+}

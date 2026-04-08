@@ -1,0 +1,478 @@
+<div class="custom-collection-page">
+  <div class="custom-collection-page__inner">
+
+    <div class="custom-collection-page__header">
+      <h1 class="custom-collection-page__heading">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p class="custom-collection-page__description">{{ collection.description }}</p>
+      {%- endif -%}
+      <p class="custom-collection-page__count">{{ collection.products_count }} results</p>
+    </div>
+
+    <div class="custom-collection-filter">
+      <div class="custom-collection-filter__left">
+        <a href="{{ collection.url }}" class="custom-collection-filter__btn {% unless current_tags %}active{% endunless %}">ALL</a>
+        {%- for tag in collection.all_tags -%}
+          {%- if tag == 'for-her' or tag == 'for-him' -%}
+            <a href="{{ collection.url }}/{{ tag }}" class="custom-collection-filter__btn {% if current_tags contains tag %}active{% endif %}">
+              {{ tag | upcase | replace: '-', ' ' }}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <button class="custom-collection-sortby__btn" id="sortByToggle">SORT BY</button>
+    </div>
+
+    {%- if collection.products_count > 0 -%}
+      {%- paginate collection.products by 8 -%}
+        <div class="custom-collection-page__grid">
+          {%- for product in collection.products -%}
+            <a href="{{ product.url }}" class="custom-collection-card">
+              <div class="custom-collection-card__image-wrapper">
+                {%- if product.featured_image -%}
+                  {{ product.featured_image | image_url: width: 800 | image_tag:
+                    widths: '400, 600, 800',
+                    class: 'custom-collection-card__image',
+                    loading: 'lazy',
+                    alt: product.title
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'custom-collection-card__image placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="custom-collection-card__info">
+                <h3 class="custom-collection-card__title">{{ product.title | upcase }}</h3>
+                <p class="custom-collection-card__price">From {{ product.price_min | money }}</p>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.next -%}
+          <div class="custom-collection-page__footer">
+            <a href="{{ paginate.next.url }}" class="custom-collection-page__see-more">SEE MORE</a>
+          </div>
+        {%- endif -%}
+
+      {%- endpaginate -%}
+    {%- else -%}
+      <div class="custom-collection-page__empty">
+        <p>No products found in this collection.</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<!-- SORT BY OVERLAY -->
+<div class="sortby-overlay" id="sortByOverlay"></div>
+
+<!-- SORT BY PANEL -->
+<div class="sortby-panel" id="sortByPanel">
+  <div class="sortby-panel__header">
+    <button class="sortby-panel__close" id="sortByClose">CLOSE</button>
+  </div>
+  <div class="sortby-panel__section">
+    <div class="sortby-panel__section-header" id="sortByToggleSection">
+      <span>SORT BY</span>
+      <span class="sortby-panel__minus">—</span>
+    </div>
+    <div class="sortby-panel__options">
+      <a href="?sort_by=manual" class="sortby-panel__option {% if collection.sort_by == 'manual' or collection.sort_by == '' %}active{% endif %}">RECOMMENDED</a>
+      <a href="?sort_by=price-ascending" class="sortby-panel__option {% if collection.sort_by == 'price-ascending' %}active{% endif %}">PRICE FROM LOW TO HIGH</a>
+      <a href="?sort_by=price-descending" class="sortby-panel__option {% if collection.sort_by == 'price-descending' %}active{% endif %}">PRICE FROM HIGH TO LOW</a>
+    </div>
+  </div>
+  <div class="sortby-panel__section">
+    <div class="sortby-panel__section-header" id="metalToggle">
+      <span>METAL</span>
+      <span class="sortby-panel__plus">+</span>
+    </div>
+    <div class="sortby-panel__options sortby-panel__options--hidden" id="metalOptions">
+      {%- for tag in collection.all_tags -%}
+        {%- if tag contains 'gold' or tag contains 'silver' or tag contains 'platinum' -%}
+          <a href="{{ collection.url }}/{{ tag }}" class="sortby-panel__option {% if current_tags contains tag %}active{% endif %}">
+            {{ tag | upcase }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="sortby-panel__section">
+    <div class="sortby-panel__section-header" id="styleToggle">
+      <span>STYLE</span>
+      <span class="sortby-panel__plus">+</span>
+    </div>
+    <div class="sortby-panel__options sortby-panel__options--hidden" id="styleOptions">
+      {%- for tag in collection.all_tags -%}
+        {%- unless tag == 'for-her' or tag == 'for-him' or tag contains 'gold' or tag contains 'silver' or tag contains 'platinum' -%}
+          <a href="{{ collection.url }}/{{ tag }}" class="sortby-panel__option {% if current_tags contains tag %}active{% endif %}">
+            {{ tag | upcase }}
+          </a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.custom-collection-page {
+  background-color: #FBF9EE !important;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.custom-collection-page__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 40px 100px;
+  box-sizing: border-box;
+}
+
+.custom-collection-page__header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.custom-collection-page__heading {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 36px;
+  color: #1a1a1a;
+  letter-spacing: 0.03em;
+  margin: 0 0 8px;
+}
+
+.custom-collection-page__description {
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(26,26,26,0.6);
+  margin: 0 auto 8px;
+  max-width: 600px;
+}
+
+.custom-collection-page__count {
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  margin: 0;
+}
+
+/* FILTER */
+.custom-collection-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding-bottom: 16px;
+}
+
+.custom-collection-filter__left {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.custom-collection-filter__btn {
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(26,26,26,0.4);
+  padding-bottom: 16px;
+  margin-bottom: -17px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.custom-collection-filter__btn.active,
+.custom-collection-filter__btn:hover {
+  color: #1a1a1a;
+  border-bottom-color: #1a1a1a;
+}
+
+.custom-collection-sortby__btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.custom-collection-sortby__btn:hover { color: #1a1a1a; }
+
+/* SORT BY OVERLAY */
+.sortby-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 2000;
+}
+.sortby-overlay.active { display: block; }
+
+/* SORT BY PANEL */
+.sortby-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  max-width: 90vw;
+  height: 100%;
+  background-color: #FBF9EE;
+  z-index: 2100;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sortby-panel.is-open { transform: translateX(0); }
+
+.sortby-panel__header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.sortby-panel__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  padding: 0;
+}
+
+.sortby-panel__section {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.sortby-panel__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  cursor: pointer;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.sortby-panel__options {
+  padding: 0 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sortby-panel__options--hidden { display: none; }
+
+.sortby-panel__option {
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(26,26,26,0.4);
+  transition: color 0.2s ease;
+}
+
+.sortby-panel__option.active,
+.sortby-panel__option:hover { color: #1a1a1a; }
+
+/* GRID */
+.custom-collection-page__grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 40px 20px !important;
+}
+
+.custom-collection-card {
+  text-decoration: none !important;
+  color: #1a1a1a !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background-color: #ffffff !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.custom-collection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+}
+
+.custom-collection-card__image-wrapper {
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+  height: 280px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 15px !important;
+  box-sizing: border-box !important;
+}
+
+.custom-collection-card__image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transition: transform 0.4s ease;
+}
+
+.custom-collection-card:hover .custom-collection-card__image {
+  transform: scale(1.05);
+}
+
+.custom-collection-card__info {
+  padding: 16px 20px 40px !important;
+  text-align: center !important;
+}
+
+.custom-collection-card__title {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 18px;
+  margin: 0 0 8px;
+  letter-spacing: 0.03em;
+}
+
+.custom-collection-card__price {
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(26,26,26,0.5);
+  margin: 0;
+}
+
+.custom-collection-page__footer {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.custom-collection-page__see-more {
+  display: inline-block;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 0.2s ease;
+}
+
+.custom-collection-page__see-more:hover { opacity: 0.5; }
+
+.custom-collection-page__empty {
+  text-align: center;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: rgba(26,26,26,0.5);
+  padding: 60px 0;
+}
+
+@media screen and (max-width: 989px) {
+  .custom-collection-page__inner {
+    padding: 40px 16px 80px;
+  }
+  .custom-collection-page__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+  .custom-collection-card__image-wrapper {
+    height: 180px !important;
+    padding: 10px !important;
+  }
+  .custom-collection-page__heading {
+    font-size: 26px;
+  }
+  .custom-collection-filter__left {
+    gap: 20px;
+  }
+  .sortby-panel {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+{% endstylesheet %}
+
+<script>
+(function() {
+  var sortByToggle = document.getElementById('sortByToggle');
+  var sortByClose  = document.getElementById('sortByClose');
+  var sortByOverlay = document.getElementById('sortByOverlay');
+  var sortByPanel  = document.getElementById('sortByPanel');
+
+  function openPanel() {
+    sortByPanel.classList.add('is-open');
+    sortByOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePanel() {
+    sortByPanel.classList.remove('is-open');
+    sortByOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (sortByToggle) sortByToggle.addEventListener('click', openPanel);
+  if (sortByClose)  sortByClose.addEventListener('click', closePanel);
+  if (sortByOverlay) sortByOverlay.addEventListener('click', closePanel);
+
+  // Toggle metal section
+  var metalToggle = document.getElementById('metalToggle');
+  var metalOptions = document.getElementById('metalOptions');
+  if (metalToggle) {
+    metalToggle.addEventListener('click', function() {
+      var isHidden = metalOptions.classList.toggle('sortby-panel__options--hidden');
+      metalToggle.querySelector('.sortby-panel__plus').textContent = isHidden ? '+' : '—';
+    });
+  }
+
+  // Toggle style section
+  var styleToggle = document.getElementById('styleToggle');
+  var styleOptions = document.getElementById('styleOptions');
+  if (styleToggle) {
+    styleToggle.addEventListener('click', function() {
+      var isHidden = styleOptions.classList.toggle('sortby-panel__options--hidden');
+      styleToggle.querySelector('.sortby-panel__plus').textContent = isHidden ? '+' : '—';
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Collection",
+  "settings": []
+}
+{% endschema %}

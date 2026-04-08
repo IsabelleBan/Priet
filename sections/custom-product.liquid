@@ -1,0 +1,987 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="custom-product" data-product-id="{{ product.id }}">
+
+  <!-- PRODUCT MAIN -->
+  <div class="custom-product__main">
+
+    <!-- IMAGES -->
+    <div class="custom-product__gallery">
+      <div class="custom-product__thumbnails">
+        {%- for image in product.images -%}
+          <button class="custom-product__thumb {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+            <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | escape }}" width="120" height="120" loading="lazy">
+          </button>
+        {%- endfor -%}
+      </div>
+      <div class="custom-product__main-image">
+        {%- for image in product.images -%}
+          <div class="custom-product__image-slide {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+            <img src="{{ image | image_url: width: 900 }}" alt="{{ image.alt | escape }}" width="900" height="900" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="custom-product__info">
+      <p class="custom-product__collection">
+        {%- for collection in product.collections limit: 1 -%}
+          {{ collection.title }}
+        {%- endfor -%}
+      </p>
+      <h1 class="custom-product__title">{{ product.title }}</h1>
+      <p class="custom-product__price" id="product-price">
+        From {{ current_variant.price | money }}
+      </p>
+
+      {%- if product.description != blank -%}
+        <div class="custom-product__description">{{ product.description }}</div>
+      {%- endif -%}
+
+      <form id="custom-product-form" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" id="variant-id" value="{{ current_variant.id }}">
+
+        <!-- METALL -->
+        {%- assign metal_option = nil -%}
+        {%- for option in product.options_with_values -%}
+          {%- if option.name == 'Jewelry material' or option.name == 'Metall' or option.name == 'Metal' -%}
+            {%- assign metal_option = option -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if metal_option -%}
+          <div class="custom-product__option">
+            <p class="custom-product__option-label">CHOOSE YOUR METAL RANGE</p>
+            <div class="custom-product__option-btns" data-option-index="{{ metal_option.position }}">
+              {%- for value in metal_option.values -%}
+                <button type="button" class="custom-product__option-btn {% if forloop.first %}active{% endif %}" data-value="{{ value }}">
+                  {{ value }}
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <!-- DIAMANT -->
+        <div class="custom-product__option">
+  <p class="custom-product__option-label">CHOOSE YOUR DIAMOND FAVOURITE</p>
+  <div class="custom-product__diamond-options">
+    <a href="/pages/choose-diamond?variant={{ product.selected_or_first_available_variant.id }}&ring={{ product.title | handle }}" 
+       class="custom-product__diamond-btn active" 
+       style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+        <line x1="12" y1="2" x2="12" y2="22"></line>
+        <line x1="2" y1="8.5" x2="22" y2="8.5"></line>
+      </svg>
+      CHOOSE DIAMOND
+    </a>
+  </div>
+</div>
+
+        <!-- BREDD (visas om taggen has-width finns) -->
+        {%- if product.tags contains 'has-width' -%}
+        <div class="custom-product__option">
+          <p class="custom-product__option-label">Width</p>
+          <div class="custom-product__width-options">
+            {%- assign widths = '1.5 mm,2.0 mm,2.5 mm,3.0 mm' | split: ',' -%}
+            {%- for w in widths -%}
+              <button type="button" class="custom-product__width-btn {% if forloop.first %}active{% endif %}" data-width="{{ w }}">
+                <span class="custom-product__width-line" style="height: {{ forloop.index | times: 1 | plus: 1 }}px;"></span>
+                <span class="custom-product__width-label">{{ w }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+          <input type="hidden" name="properties[Width]" id="width-choice" value="1.5 mm">
+        </div>
+        {%- endif -%}
+
+        <!-- ANTAL DIAMANTER (visas om taggen has-diamond-count finns) -->
+        {%- if product.tags contains 'has-diamond-count' -%}
+        <div class="custom-product__option">
+          <p class="custom-product__option-label">Number of diamonds</p>
+          <div class="custom-product__radio-options">
+            {%- assign diamond_counts = 'Semi-alliance,Half-alliance,Full-alliance' | split: ',' -%}
+            {%- for dc in diamond_counts -%}
+              <label class="custom-product__radio-label">
+                <input
+                  type="radio"
+                  name="properties[Number of diamonds]"
+                  value="{{ dc }}"
+                  class="custom-product__radio-input"
+                  {% if forloop.first %}checked{% endif %}
+                >
+                <span class="custom-product__radio-custom"></span>
+                <span class="custom-product__radio-text">{{ dc | upcase }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- endif -%}
+
+        <!-- RINGSTORLEK -->
+        <div class="custom-product__option">
+          <p class="custom-product__option-label">CHOOSE YOUR RING SIZE <span class="custom-product__option-optional">(Sizes above 57¾ EU incur an additional charge of 1,500 SEK)</span></p>
+          <div class="custom-product__select-wrapper">
+            <select class="custom-product__select" name="properties[Ring size]" id="ring-size-select">
+              <option value="">Select size</option>
+              <option value="42¾ (EU) / E (UK) / 2½ (US)">42¾ EU &nbsp;·&nbsp; E UK &nbsp;·&nbsp; 2½ US</option>
+              <option value="42¾ (EU) / E½ (UK) / 2¾ (US)">42¾ EU &nbsp;·&nbsp; E½ UK &nbsp;·&nbsp; 2¾ US</option>
+              <option value="44 (EU) / F (UK) / 2⅞ (US)">44 EU &nbsp;·&nbsp; F UK &nbsp;·&nbsp; 2⅞ US</option>
+              <option value="44⅝ (EU) / F½ (UK) / 3 (US)">44⅝ EU &nbsp;·&nbsp; F½ UK &nbsp;·&nbsp; 3 US</option>
+              <option value="45¼ (EU) / G (UK) / 3¼ (US)">45¼ EU &nbsp;·&nbsp; G UK &nbsp;·&nbsp; 3¼ US</option>
+              <option value="45⅞ (EU) / G½ (UK) / 3½ (US)">45⅞ EU &nbsp;·&nbsp; G½ UK &nbsp;·&nbsp; 3½ US</option>
+              <option value="46½ (EU) / H (UK) / 3¾ (US)">46½ EU &nbsp;·&nbsp; H UK &nbsp;·&nbsp; 3¾ US</option>
+              <option value="47⅛ (EU) / H½ (UK) / 4 (US)">47⅛ EU &nbsp;·&nbsp; H½ UK &nbsp;·&nbsp; 4 US</option>
+              <option value="47¾ (EU) / I (UK) / 4¼ (US)">47¾ EU &nbsp;·&nbsp; I UK &nbsp;·&nbsp; 4¼ US</option>
+              <option value="48 (EU) / I½ (UK) / 4½ (US)">48 EU &nbsp;·&nbsp; I½ UK &nbsp;·&nbsp; 4½ US</option>
+              <option value="48¾ (EU) / J (UK) / 4¾ (US)">48¾ EU &nbsp;·&nbsp; J UK &nbsp;·&nbsp; 4¾ US</option>
+              <option value="49 (EU) / J½ (UK) / 5 (US)">49 EU &nbsp;·&nbsp; J½ UK &nbsp;·&nbsp; 5 US</option>
+              <option value="49⅝ (EU) / K (UK) / 5¼ (US)">49⅝ EU &nbsp;·&nbsp; K UK &nbsp;·&nbsp; 5¼ US</option>
+              <option value="50¼ (EU) / K½ (UK) / 5½ (US)">50¼ EU &nbsp;·&nbsp; K½ UK &nbsp;·&nbsp; 5½ US</option>
+              <option value="50⅞ (EU) / L (UK) / 5¾ (US)">50⅞ EU &nbsp;·&nbsp; L UK &nbsp;·&nbsp; 5¾ US</option>
+              <option value="51½ (EU) / L½ (UK) / 6 (US)">51½ EU &nbsp;·&nbsp; L½ UK &nbsp;·&nbsp; 6 US</option>
+              <option value="52⅛ (EU) / M (UK) / 6¼ (US)">52⅛ EU &nbsp;·&nbsp; M UK &nbsp;·&nbsp; 6¼ US</option>
+              <option value="52¾ (EU) / M½ (UK) / 6½ (US)">52¾ EU &nbsp;·&nbsp; M½ UK &nbsp;·&nbsp; 6½ US</option>
+              <option value="53⅜ (EU) / N (UK) / 6¾ (US)">53⅜ EU &nbsp;·&nbsp; N UK &nbsp;·&nbsp; 6¾ US</option>
+              <option value="53¼ (EU) / N½ (UK) / 7 (US)">53¼ EU &nbsp;·&nbsp; N½ UK &nbsp;·&nbsp; 7 US</option>
+              <option value="54 (EU) / O (UK) / 7¼ (US)">54 EU &nbsp;·&nbsp; O UK &nbsp;·&nbsp; 7¼ US</option>
+              <option value="54⅝ (EU) / O½ (UK) / 7½ (US)">54⅝ EU &nbsp;·&nbsp; O½ UK &nbsp;·&nbsp; 7½ US</option>
+              <option value="55¼ (EU) / P (UK) / 7¾ (US)">55¼ EU &nbsp;·&nbsp; P UK &nbsp;·&nbsp; 7¾ US</option>
+              <option value="55⅞ (EU) / P½ (UK) / 8 (US)">55⅞ EU &nbsp;·&nbsp; P½ UK &nbsp;·&nbsp; 8 US</option>
+              <option value="56½ (EU) / Q (UK) / 8¼ (US)">56½ EU &nbsp;·&nbsp; Q UK &nbsp;·&nbsp; 8¼ US</option>
+              <option value="57⅛ (EU) / Q½ (UK) / 8½ (US)">57⅛ EU &nbsp;·&nbsp; Q½ UK &nbsp;·&nbsp; 8½ US</option>
+              <option value="57¾ (EU) / R (UK) / 8¾ (US) (+1 500 SEK)">57¾ EU &nbsp;·&nbsp; R UK &nbsp;·&nbsp; 8¾ US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="58⅜ (EU) / R½ (UK) / 9 (US) (+1 500 SEK)">58⅜ EU &nbsp;·&nbsp; R½ UK &nbsp;·&nbsp; 9 US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="59 (EU) / S (UK) / 9¼ (US) (+1 500 SEK)">59 EU &nbsp;·&nbsp; S UK &nbsp;·&nbsp; 9¼ US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="59⅝ (EU) / S½ (UK) / 9½ (US) (+1 500 SEK)">59⅝ EU &nbsp;·&nbsp; S½ UK &nbsp;·&nbsp; 9½ US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="60⅞ (EU) / T (UK) / 9¾ (US) (+1 500 SEK)">60⅞ EU &nbsp;·&nbsp; T UK &nbsp;·&nbsp; 9¾ US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="61½ (EU) / T½ (UK) / 10 (US) (+1 500 SEK)">61½ EU &nbsp;·&nbsp; T½ UK &nbsp;·&nbsp; 10 US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="61⅛ (EU) / U (UK) / 10¼ (US) (+1 500 SEK)">61⅛ EU &nbsp;·&nbsp; U UK &nbsp;·&nbsp; 10¼ US &nbsp;(+&nbsp;1 500 SEK)</option>
+              <option value="62 (EU) / U½ (UK) / 10¼ (US) (+1 500 SEK)">62 EU &nbsp;·&nbsp; U½ UK &nbsp;·&nbsp; 10¼ US &nbsp;(+&nbsp;1 500 SEK)</option>
+            </select>
+            <svg class="custom-product__select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <p class="custom-product__size-guide-link">
+            <a href="#" class="custom-product__size-guide">Ring size guide</a>
+          </p>
+        </div>
+
+        <!-- GRAVERING -->
+        <div class="custom-product__option">
+          <p class="custom-product__option-label">ENGRAVING <span class="custom-product__option-optional">(optional)</span></p>
+          <input
+            type="text"
+            class="custom-product__engraving"
+            name="properties[Engraving]"
+            placeholder="Your text here"
+            maxlength="20"
+          >
+          <p class="custom-product__engraving-note">Max 20 characters</p>
+        </div>
+
+        <button type="button" class="custom-product__add-btn" id="add-to-bag">
+          ADD TO BAG
+        </button>
+
+      </form>
+
+      <!-- ACCORDION -->
+      <div class="custom-product__accordions">
+        <div class="custom-product__accordion">
+          <button class="custom-product__accordion-header">
+            <span>Shipping</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="custom-product__accordion-body">
+            <p>Complimentary delivery on all orders. Estimated delivery 3–5 business days.</p>
+          </div>
+        </div>
+        <div class="custom-product__accordion">
+          <button class="custom-product__accordion-header">
+            <span>Returns</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="custom-product__accordion-body">
+            <p>We accept returns within 30 days of delivery. Items must be unworn and in original condition.</p>
+          </div>
+        </div>
+        <div class="custom-product__accordion">
+          <button class="custom-product__accordion-header">
+            <span>Ring care</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="custom-product__accordion-body">
+            <p>Clean your ring regularly with a soft cloth. Avoid exposure to chemicals and store separately.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="custom-product__sections">
+  <!-- SIMILAR RINGS -->
+  {%- if product.tags contains 'engagement' or product.tags contains 'wedding' -%}
+    {%- assign similar_tag = '' -%}
+    {%- if product.tags contains 'engagement' -%}
+      {%- assign similar_tag = 'engagement' -%}
+    {%- elsif product.tags contains 'wedding' -%}
+      {%- assign similar_tag = 'wedding' -%}
+    {%- endif -%}
+    <div class="custom-product__related">
+      <h2 class="custom-product__related-heading">Similar rings</h2>
+      <div class="custom-product__related-grid">
+        {%- assign count = 0 -%}
+        {%- for p in collections.all.products -%}
+          {%- if p.id != product.id and count < 4 -%}
+            {%- if p.tags contains similar_tag -%}
+              {%- assign count = count | plus: 1 -%}
+              <a href="{{ p.url }}" class="custom-product__related-card">
+                <div class="custom-product__related-image-wrapper">
+                  {%- if p.featured_image -%}
+                    <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title }}" width="600" height="600" loading="lazy">
+                  {%- endif -%}
+                </div>
+                <div class="custom-product__related-info">
+                  <p class="custom-product__related-title">{{ p.title | upcase }}</p>
+                  <p class="custom-product__related-price">From {{ p.price_min | money }}</p>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="custom-product__related-footer">
+        <a href="{{ routes.all_products_collection_url }}" class="custom-product__see-more">SEE MORE</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <!-- MID HERO IMAGE -->
+  {%- if section.settings.mid_image != blank -%}
+    <div class="custom-product__mid-hero">
+      {{ section.settings.mid_image | image_url: width: 2000 | image_tag:
+        widths: '800, 1200, 1600, 2000',
+        class: 'custom-product__mid-hero-image',
+        loading: 'lazy'
+      }}
+    </div>
+  {%- endif -%}
+
+  <!-- COMBINE IT WITH -->
+  {%- if product.tags contains 'engagement' or product.tags contains 'wedding' -%}
+    {%- assign combine_tag = '' -%}
+    {%- if product.tags contains 'engagement' -%}
+      {%- assign combine_tag = 'wedding' -%}
+    {%- elsif product.tags contains 'wedding' -%}
+      {%- assign combine_tag = 'engagement' -%}
+    {%- endif -%}
+    <div class="custom-product__related custom-product__combine">
+      <h2 class="custom-product__related-heading">Combine it with</h2>
+      <div class="custom-product__related-grid">
+        {%- assign combine_count = 0 -%}
+        {%- for p in collections.all.products -%}
+          {%- if p.id != product.id and combine_count < 4 -%}
+            {%- if p.tags contains combine_tag -%}
+              {%- assign combine_count = combine_count | plus: 1 -%}
+              <a href="{{ p.url }}" class="custom-product__related-card">
+                <div class="custom-product__related-image-wrapper">
+                  {%- if p.featured_image -%}
+                    <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title }}" width="600" height="600" loading="lazy">
+                  {%- endif -%}
+                </div>
+                <div class="custom-product__related-info">
+                  <p class="custom-product__related-title">{{ p.title | upcase }}</p>
+                  <p class="custom-product__related-price">From {{ p.price_min | money }}</p>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="custom-product__related-footer">
+        <a href="{{ routes.all_products_collection_url }}" class="custom-product__see-more">SEE MORE</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
+</div>
+
+{% stylesheet %}
+#MainContent { background-color: #FBF9EE !important; }
+
+.custom-product {
+  background-color: #FBF9EE;
+}
+
+.custom-product__main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 40px 100px;
+  box-sizing: border-box;
+  align-items: start;
+}
+
+.custom-product__sections {
+  background-color: #FBF9EE;
+  padding: 80px 0;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.custom-product__sections .custom-product__related,
+.custom-product__sections .custom-product__mid-hero {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.custom-product__sections .custom-product__mid-hero {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 100%;
+  margin-bottom: 80px;
+  height: 500px;
+  overflow: hidden;
+}
+
+.custom-product__gallery {
+  display: flex;
+  gap: 16px;
+  position: sticky;
+  top: 20px;
+}
+
+.custom-product__thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 72px;
+  flex-shrink: 0;
+}
+
+.custom-product__thumb {
+  width: 72px;
+  height: 72px;
+  border: 1px solid transparent;
+  background: #fff;
+  cursor: pointer;
+  padding: 4px;
+  transition: border-color 0.2s ease;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  border-radius: 4px;
+}
+
+.custom-product__thumb.active { border-color: #1a1a1a; }
+.custom-product__thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+.custom-product__main-image { flex: 1; }
+.custom-product__image-slide { display: none; }
+.custom-product__image-slide.active { display: block; }
+
+.custom-product__image-slide img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.custom-product__info { padding-top: 10px; }
+
+.custom-product__collection {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  margin: 0 0 8px;
+}
+
+.custom-product__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 36px;
+  letter-spacing: 0.03em;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+
+.custom-product__price {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: rgba(26,26,26,0.6);
+  margin: 0 0 24px;
+}
+
+.custom-product__description {
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(26,26,26,0.6);
+  margin-bottom: 32px;
+}
+
+.custom-product__option { margin-bottom: 28px; }
+
+.custom-product__option-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0 0 12px;
+}
+
+.custom-product__option-optional {
+  font-size: 12px;
+  opacity: 0.6;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.custom-product__option-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.custom-product__option-btn {
+  padding: 10px 20px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  color: #000000;
+}
+
+.custom-product__option-btn.active {
+  border-color: #f3f1e3;
+  background: #000000;
+  color: #fff;
+}
+
+.custom-product__diamond-options { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.custom-product__diamond-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  color: #000000;
+}
+
+.custom-product__diamond-btn.active {
+  border-color: #000000;
+  background: #000000;
+  color: #fff;
+}
+
+/* WIDTH */
+.custom-product__width-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.custom-product__width-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+}
+
+.custom-product__width-btn.active {
+  border-color: #000000;
+  background: #fff;
+}
+
+.custom-product__width-line {
+  display: block;
+  width: 40px;
+  background: #1a1a1a;
+  border-radius: 2px;
+  transition: height 0.2s;
+}
+
+.custom-product__width-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+/* RADIO */
+.custom-product__radio-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.custom-product__radio-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.custom-product__radio-input {
+  display: none;
+}
+
+.custom-product__radio-custom {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.custom-product__radio-input:checked + .custom-product__radio-custom {
+  border-color: #1a1a1a;
+}
+
+.custom-product__radio-input:checked + .custom-product__radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #1a1a1a;
+  border-radius: 50%;
+}
+
+/* SELECT */
+.custom-product__select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+}
+
+.custom-product__select {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #000000;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+}
+
+.custom-product__select-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #000000;
+}
+
+.custom-product__engraving {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 16px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #000000;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.custom-product__engraving::placeholder { color: rgba(26,26,26,0.3); }
+
+.custom-product__engraving-note {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: rgba(26,26,26,0.35);
+  margin: 6px 0 0;
+}
+
+.custom-product__add-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px;
+  background: #000000;
+  color: #fff;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+.custom-product__add-btn:hover { opacity: 0.8; }
+
+.custom-product__accordions { margin-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); }
+.custom-product__accordion { border-bottom: 1px solid rgba(0,0,0,0.08); }
+
+.custom-product__accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.custom-product__accordion-header svg { transition: transform 0.2s ease; flex-shrink: 0; }
+.custom-product__accordion-header.open svg { transform: rotate(180deg); }
+
+.custom-product__accordion-body {
+  display: none;
+  padding: 0 0 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(26,26,26,0.6);
+}
+
+.custom-product__accordion-body p { margin: 0; }
+
+.custom-product__related { margin-bottom: 80px; }
+.custom-product__related:last-child { margin-bottom: 0; }
+
+.custom-product__related-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 32px;
+  letter-spacing: 0.03em;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0 0 40px;
+}
+
+.custom-product__related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.custom-product__related-card {
+  text-decoration: none;
+  color: #1a1a1a;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-product__related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.custom-product__related-image-wrapper {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #fff;
+}
+
+.custom-product__related-image-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.custom-product__related-info { padding: 12px 16px 20px; text-align: center; }
+
+.custom-product__related-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+
+.custom-product__related-price {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  color: rgba(26,26,26,0.5);
+  margin: 0;
+}
+
+.custom-product__related-footer { text-align: center; margin-top: 40px; }
+
+.custom-product__see-more {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 0.2s ease;
+}
+
+.custom-product__see-more:hover { opacity: 0.5; }
+
+.custom-product__mid-hero-image { width: 100%; height: 100%; object-fit: cover; }
+
+@media screen and (max-width: 989px) {
+  .custom-product__main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px 16px 60px;
+    margin-bottom: 0;
+  }
+
+  .custom-product__sections { padding: 40px 0; }
+
+  .custom-product__sections .custom-product__related,
+  .custom-product__sections .custom-product__mid-hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .custom-product__sections .custom-product__mid-hero {
+    padding-left: 0;
+    padding-right: 0;
+    height: 300px;
+  }
+
+  .custom-product__gallery { flex-direction: column-reverse; position: static; }
+  .custom-product__thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
+  .custom-product__thumb { flex-shrink: 0; }
+  .custom-product__related-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .custom-product__related-image-wrapper { height: 160px; }
+
+  .custom-product__add-btn,
+  .custom-product__select-wrapper,
+  .custom-product__engraving { max-width: 100%; }
+}
+{% endstylesheet %}
+
+<script>
+(function() {
+  // GALLERY
+  var thumbs = document.querySelectorAll('.custom-product__thumb');
+  var slides = document.querySelectorAll('.custom-product__image-slide');
+
+  thumbs.forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      var index = this.getAttribute('data-index');
+      thumbs.forEach(function(t) { t.classList.remove('active'); });
+      slides.forEach(function(s) { s.classList.remove('active'); });
+      this.classList.add('active');
+      document.querySelector('.custom-product__image-slide[data-index="' + index + '"]').classList.add('active');
+    });
+  });
+
+  // VARIANT SELECTION
+  var selectedOptions = {};
+  var productData = {{ product.variants | json }};
+
+  function updateVariant() {
+    var optionValues = Object.values(selectedOptions);
+    var matchedVariant = productData.find(function(v) {
+      return v.options.every(function(opt, i) {
+        return !optionValues[i] || opt === optionValues[i];
+      });
+    });
+    if (matchedVariant) {
+      document.getElementById('variant-id').value = matchedVariant.id;
+      document.getElementById('product-price').textContent = 'From ' + (matchedVariant.price / 100).toLocaleString('sv-SE', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 });
+    }
+  }
+
+  document.querySelectorAll('.custom-product__option-btns').forEach(function(group) {
+    var optionIndex = parseInt(group.getAttribute('data-option-index')) - 1;
+    group.querySelectorAll('.custom-product__option-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        group.querySelectorAll('.custom-product__option-btn').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        selectedOptions[optionIndex] = this.getAttribute('data-value');
+        updateVariant();
+      });
+      if (btn.classList.contains('active')) {
+        selectedOptions[optionIndex] = btn.getAttribute('data-value');
+      }
+    });
+  });
+
+  // WIDTH-knappar
+  var widthInput = document.getElementById('width-choice');
+  document.querySelectorAll('.custom-product__width-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.custom-product__width-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      if (widthInput) widthInput.value = this.getAttribute('data-width');
+    });
+  });
+
+  // ACCORDIONS
+  document.querySelectorAll('.custom-product__accordion-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      var body = this.nextElementSibling;
+      var isOpen = this.classList.contains('open');
+      this.classList.toggle('open', !isOpen);
+      body.style.display = isOpen ? 'none' : 'block';
+    });
+  });
+
+  // ADD TO CART + SIZE ADJUSTMENT
+  var SIZE_ADJUSTMENT_VARIANT_ID = 53104121774423;
+  var SIZE_ADJUSTMENT_FROM_INDEX = 27;
+
+  var form = document.getElementById('custom-product-form');
+  var sizeSelect = document.getElementById('ring-size-select');
+  var addBtn = document.getElementById('add-to-bag');
+
+  if (!form) return;
+
+  function buildProperties() {
+    var props = {};
+    var inputs = form.querySelectorAll('[name^="properties["]');
+    inputs.forEach(function(input) {
+      var match = input.name.match(/properties\[(.+)\]/);
+      if (match && input.value) props[match[1]] = input.value;
+    });
+    return props;
+  }
+
+  function addToCart(id, quantity, properties) {
+    var body = { id: id, quantity: quantity };
+    if (properties) body.properties = properties;
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function(res) {
+      return res.json().then(function(data) {
+        if (!res.ok) {
+          console.error('Cart add error for id ' + id + ':', JSON.stringify(data));
+          throw new Error(data.description || 'Cart error');
+        }
+        return data;
+      });
+    });
+  }
+
+  addBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var variantId = parseInt(document.getElementById('variant-id').value);
+    var needsAdjustment = sizeSelect && sizeSelect.value !== '' && sizeSelect.selectedIndex >= SIZE_ADJUSTMENT_FROM_INDEX;
+
+    addBtn.textContent = 'ADDING...';
+    addBtn.disabled = true;
+
+    addToCart(variantId, 1, buildProperties())
+      .then(function() {
+        if (!needsAdjustment) {
+          window.location.href = '/cart';
+          return Promise.resolve();
+        }
+        return fetch('/cart.js').then(function(r) { return r.json(); });
+      })
+      .then(function(cart) {
+        if (!cart || !cart.items) return;
+        var ringItem = cart.items.find(function(item) {
+          return item.variant_id === variantId;
+        });
+        var mainItemKey = ringItem ? ringItem.key : null;
+        return addToCart(SIZE_ADJUSTMENT_VARIANT_ID, 1, {
+          '_surcharge': 'true',
+          '_for_key': mainItemKey
+        });
+      })
+      .then(function() {
+        window.location.href = '/cart';
+      })
+      .catch(function(err) {
+        console.error('Final error:', err.message);
+        addBtn.textContent = 'ADD TO BAG';
+        addBtn.disabled = false;
+      });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Product",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "mid_image",
+      "label": "Mid-page hero image"
+    }
+  ]
+}
+{% endschema %}

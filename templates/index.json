@@ -1,0 +1,370 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_hero_B8NyjR": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "video_file": "shopify://files/videos/priet-video.mp4",
+        "image": "shopify://shop_images/Video.png",
+        "height": 100,
+        "overlay_opacity": 10,
+        "heading": "Forever starts here",
+        "subheading": "Discover our exclusive diamond rings",
+        "button_label": "Find your dream ring",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "custom_categories": {
+      "type": "custom-categories",
+      "blocks": {
+        "cat_engagement": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ring1.png",
+            "title": "Engagement rings",
+            "link_text": "Explore",
+            "link": "shopify://collections/engagement-rings"
+          }
+        },
+        "cat_wedding": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ring2.png",
+            "title": "Wedding rings",
+            "link_text": "Explore",
+            "link": "shopify://collections/wedding-rings"
+          }
+        },
+        "cat_diamonds": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ring3.png",
+            "title": "Diamonds",
+            "link_text": "Explore",
+            "link": "shopify://pages/diamond-guide"
+          }
+        }
+      },
+      "block_order": [
+        "cat_engagement",
+        "cat_wedding",
+        "cat_diamonds"
+      ],
+      "custom_css": [],
+      "settings": {
+        "heading": "Our categories",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_hero_mbipTr": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "image": "shopify://shop_images/Illustration_34bc2d51-85b3-4e27-a977-88ce19b7157e.png",
+        "height": 75,
+        "overlay_opacity": 30,
+        "heading": "Discover the world of Priet",
+        "subheading": "",
+        "button_label": "Read more",
+        "button_link": ""
+      }
+    },
+    "custom_featured_products_nB7KhY": {
+      "type": "custom-featured-products",
+      "blocks": {
+        "product_7GmCUb": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Ring1_48ed03fb-1597-47d2-90b9-3cb80650e429.png",
+            "title": "Jaipur",
+            "price": "From 12,400 kr",
+            "link": "",
+            "product": "ina"
+          }
+        },
+        "product_fEWPFr": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-2-removebg_1_c8621ec1-591c-48c9-af7a-206b70ee96e0.png",
+            "title": "Udaipur",
+            "price": "From 12,400 kr",
+            "link": "",
+            "product": "elira"
+          }
+        },
+        "product_fGkcw3": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-2-removebg_1_c8621ec1-591c-48c9-af7a-206b70ee96e0.png",
+            "title": "Bharatpur",
+            "price": "From 12,400 kr",
+            "link": "",
+            "product": "evira"
+          }
+        },
+        "product_36CwN7": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-1-removebg_1_2449c806-e952-4543-9397-6422846757c6.png",
+            "title": "Jodhpur",
+            "price": "From 12,400 kr",
+            "link": "",
+            "product": "aroa"
+          }
+        }
+      },
+      "block_order": [
+        "product_7GmCUb",
+        "product_fEWPFr",
+        "product_fGkcw3",
+        "product_36CwN7"
+      ],
+      "name": "Featured Products",
+      "settings": {
+        "heading": "Discover our engagement rings",
+        "button_text": "SEE MORE",
+        "button_link": "#",
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "custom_story": {
+      "type": "custom-story",
+      "custom_css": [],
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Our Story",
+        "text": "<p>Behind every pies lies a story, precision and emotion. Discover our story on why we will guide you to your forever ring and be a part of your story.</p>",
+        "button_label": "Read more",
+        "button_link": "shopify://pages/our-story",
+        "image": "shopify://shop_images/Frame_2.png",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_featured_products_FL8Wck": {
+      "type": "custom-featured-products",
+      "blocks": {
+        "product_mGfmGi": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-3-removebg_1.png",
+            "title": "Jaipur",
+            "price": "From 17,400 kr",
+            "link": "",
+            "product": "dil"
+          }
+        },
+        "product_Az93da": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-1-removebg_2.png",
+            "title": "Jaipur",
+            "price": "From 17,400 kr",
+            "link": "",
+            "product": "diya"
+          }
+        },
+        "product_ER7JTe": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-removebg_1.png",
+            "title": "Jaipur",
+            "price": "From 17,400 kr",
+            "link": "",
+            "product": "amani"
+          }
+        },
+        "product_zgGVN6": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Image-2-removebg_2.png",
+            "title": "Jaipur",
+            "price": "From 17,400 kr",
+            "link": "",
+            "product": "meera"
+          }
+        }
+      },
+      "block_order": [
+        "product_mGfmGi",
+        "product_Az93da",
+        "product_ER7JTe",
+        "product_zgGVN6"
+      ],
+      "name": "Featured Products",
+      "settings": {
+        "heading": "Discover our wedding rings",
+        "button_text": "SEE MORE",
+        "button_link": "shopify://collections/wedding-rings",
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "custom_story_i9Hffk": {
+      "type": "custom-story",
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Our Craftmanship",
+        "text": "<p>Let the craftmanship of Priet be a part of your journey. With Scandinavian design and simplicity, our craftmanship transform your vision into reality.</p>",
+        "button_label": "Read more",
+        "button_link": "shopify://pages/our-craftmanship",
+        "image": "shopify://shop_images/Image.png",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_banner_grid_j7Fc33": {
+      "type": "custom-banner-grid",
+      "blocks": {
+        "banner_7cpUWm": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/Image_1.png",
+            "title": "Engagement rings",
+            "link": "shopify://collections/engagement-rings"
+          }
+        },
+        "banner_8YRYTe": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/Image_2.png",
+            "title": "Wedding rings",
+            "link": "shopify://collections/wedding-rings"
+          }
+        },
+        "banner_Li9qnH": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/Image_3.png",
+            "title": "Diamonds",
+            "link": "shopify://pages/diamond-guide"
+          }
+        }
+      },
+      "block_order": [
+        "banner_7cpUWm",
+        "banner_8YRYTe",
+        "banner_Li9qnH"
+      ],
+      "name": "Custom Banner Grid",
+      "settings": {
+        "heading": "Shop by category",
+        "background_color": "#fbf9ee",
+        "padding_top": 40,
+        "padding_bottom": 120
+      }
+    },
+    "custom_story_6reHX8": {
+      "type": "custom-story",
+      "name": "Our Story",
+      "settings": {
+        "background_color": "#f3f1e3",
+        "heading": "Let us guide you step by step",
+        "text": "<p>Discover the journey of how we bring your forever ring to life. Let Priét guide you step by step to your forever ring.</p>",
+        "button_label": "read more",
+        "button_link": "",
+        "image": "shopify://shop_images/Image.jpg",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_instagram_banner_jEnUqR": {
+      "type": "custom-instagram-banner",
+      "blocks": {
+        "item_h6qJAR": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Image_4.png",
+            "title": "",
+            "price": "",
+            "link": "",
+            "product": ""
+          }
+        },
+        "item_JVh3hA": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Image_5.png",
+            "title": "",
+            "price": "",
+            "link": "",
+            "product": ""
+          }
+        },
+        "item_6NNNVX": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Image_6.png",
+            "title": "",
+            "price": "",
+            "link": "",
+            "product": ""
+          }
+        },
+        "item_fgHecc": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Image_7.png",
+            "title": "",
+            "price": "",
+            "link": "",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_h6qJAR",
+        "item_JVh3hA",
+        "item_6NNNVX",
+        "item_fgHecc"
+      ],
+      "name": "Instagram Banner",
+      "settings": {
+        "heading": "Follow us on Instagram",
+        "button_text": "SEE MORE",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "custom_newsletter_wtckKP": {
+      "type": "custom-newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/Mask_group_1.png",
+        "heading": "Get the latest news",
+        "btn_bg": "#fbf9ee",
+        "btn_text": "#1a1a1a",
+        "btn_hover_bg": "#1a1a1a",
+        "btn_hover_text": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "custom_hero_B8NyjR",
+    "custom_categories",
+    "custom_hero_mbipTr",
+    "custom_featured_products_nB7KhY",
+    "custom_story",
+    "custom_featured_products_FL8Wck",
+    "custom_story_i9Hffk",
+    "custom_banner_grid_j7Fc33",
+    "custom_story_6reHX8",
+    "custom_instagram_banner_jEnUqR",
+    "custom_newsletter_wtckKP"
+  ]
+}

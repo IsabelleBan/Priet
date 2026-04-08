@@ -1,0 +1,884 @@
+<div class="header-section" data-section-id="{{ section.id }}" data-section-type="header">
+  {%- if section.settings.announcement_text != blank -%}
+    <div class="announcement-bar">
+      {{ section.settings.announcement_text }}
+    </div>
+  {%- endif -%}
+
+  <!-- DESKTOP HEADER -->
+  <header class="custom-header">
+    <div class="header__left">
+      <div class="header__localization">
+        <span class="lang-link active">SE</span>
+        <span class="lang-link inactive">EN</span>
+      </div>
+      <nav>
+        <ul class="main-menu">
+          {%- for link in section.settings.main_menu.links limit: 4 -%}
+            <li class="menu-item {% if link.links != blank %}has-mega-menu{% endif %}">
+              <a href="{{ link.url }}">{{ link.title | upcase }}</a>
+              {%- if link.links != blank -%}
+                <div class="mega-menu">
+                  <div class="mega-menu__inner">
+                    <div class="mega-menu__grid">
+                      {%- for childlink in link.links -%}
+                        <div class="mega-menu__column">
+                          <h4 class="mega-menu__title">{{ childlink.title | upcase }}</h4>
+                          <ul>
+                            {%- for grandchildlink in childlink.links -%}
+                              <li><a href="{{ grandchildlink.url }}">{{ grandchildlink.title | upcase }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                    
+                  </div>
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="header__logo">
+      <a href="{{ routes.root_url }}" class="header__logo-link">
+        <span>{{ section.settings.logo_text }}</span>
+      </a>
+    </div>
+
+    <div class="header__right">
+      {%- if section.settings.extra_menu != blank -%}
+        <nav>
+          <ul class="main-menu">
+            {%- for link in section.settings.extra_menu.links -%}
+              <li class="menu-item"><a href="{{ link.url }}">{{ link.title | upcase }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+      <div class="header__icons">
+        <button class="header__icon search-toggle" id="searchToggle" aria-label="Sök">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <a href="{{ routes.account_url }}" class="header__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+        <a href="/pages/wishlist" class="header__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </a>
+        <a href="{{ routes.cart_url }}" class="header__icon cart-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="cart-count">({{ cart.item_count }})</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- MOBILE HEADER -->
+  <header class="mobile-header">
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Öppna meny">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+    </button>
+    <a href="{{ routes.root_url }}" class="mobile-logo">
+      <span>{{ section.settings.logo_text }}</span>
+    </a>
+    <div class="mobile-header__icons">
+      <button class="header__icon search-toggle" id="searchToggleMobile" aria-label="Sök">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <a href="{{ routes.account_url }}" class="header__icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </a>
+      <a href="{{ routes.cart_url }}" class="header__icon cart-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="cart-count">({{ cart.item_count }})</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- SEARCH BAR DROPDOWN -->
+  <div class="search-bar" id="searchBar">
+    <div class="search-bar__inner">
+      <form action="{{ routes.search_url }}" method="get" class="search-bar__form">
+        <input
+          type="text"
+          name="q"
+          class="search-bar__input"
+          placeholder="SEARCH HERE"
+          autocomplete="off"
+          id="searchInput"
+        >
+        <input type="hidden" name="type" value="product">
+      </form>
+      <button class="search-bar__close" id="searchClose">CLOSE</button>
+    </div>
+    <div class="search-bar__line"></div>
+    <div class="search-bar__results" id="searchResults"></div>
+  </div>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- MOBILE PANEL 1: Huvudmeny -->
+  <div class="mobile-panel mobile-panel--main" id="mobilePanelMain">
+    <div class="mobile-panel__header">
+      <button class="mobile-close" id="mobileClose" aria-label="Stäng meny">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <span class="mobile-panel__title">MENU</span>
+    </div>
+    <nav class="mobile-nav">
+      <ul>
+        {%- for link in section.settings.main_menu.links -%}
+          <li class="mobile-nav__item">
+            {%- if link.links != blank -%}
+              <button class="mobile-nav__link mobile-nav__link--parent" data-submenu="{{ forloop.index }}">
+                {{ link.title | upcase }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            {%- else -%}
+              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title | upcase }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+        {%- if section.settings.extra_menu != blank -%}
+          {%- for link in section.settings.extra_menu.links -%}
+            <li class="mobile-nav__item">
+              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title | upcase }}</a>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+        <li class="mobile-nav__item mobile-nav__item--lang">
+          <span class="lang-link active">SE</span>
+          <span class="lang-divider">/</span>
+          <span class="lang-link inactive">EN</span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- MOBILE PANEL 2: Undermenyer -->
+  {%- for link in section.settings.main_menu.links -%}
+    {%- if link.links != blank -%}
+      <div class="mobile-panel mobile-panel--sub" id="mobilePanel{{ forloop.index }}">
+        <div class="mobile-panel__header">
+          <button class="mobile-back" data-back="{{ forloop.index }}" aria-label="Tillbaka">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <span class="mobile-panel__title">{{ link.title | upcase }}</span>
+        </div>
+        <nav class="mobile-nav mobile-nav--sub">
+          {%- for childlink in link.links -%}
+            <div class="mobile-sub-group">
+              <h4 class="mobile-sub-group__title">{{ childlink.title | upcase }}</h4>
+              <ul>
+                {%- for grandchildlink in childlink.links -%}
+                  <li>
+                    <a href="{{ grandchildlink.url }}" class="mobile-sub-link">{{ grandchildlink.title | upcase }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endfor -%}
+        </nav>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+</div>
+
+{% stylesheet %}
+  /* =============================
+     ANNOUNCEMENT BAR
+  ============================= */
+  .announcement-bar {
+    background-color: #000 !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 12px 0;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  /* =============================
+     DESKTOP HEADER
+  ============================= */
+  .custom-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center;
+    padding: 0 40px;
+    background-color: #FBF9EE;
+    min-height: 100px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .header__left, .header__right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex: 1;
+  }
+  .header__right { justify-content: flex-end; }
+
+  .header__logo { flex: 0 0 auto; text-align: center; }
+  .header__logo span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    color: #1a1a1a;
+  }
+
+  .header__localization {
+    display: flex;
+    gap: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    margin-right: 10px;
+  }
+  .lang-link { cursor: pointer; }
+  .lang-link.inactive { color: #ccc; }
+
+  .main-menu { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
+  .menu-item { position: static; padding: 40px 0; }
+  .menu-item a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .header__icons { display: flex; gap: 18px; align-items: center; margin-left: 20px; }
+  .header__icon { color: #1a1a1a; text-decoration: none; display: flex; align-items: center; }
+  .cart-link { gap: 5px; font-size: 11px; }
+
+  .search-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #1a1a1a;
+  }
+
+  /* SEARCH BAR */
+  .search-bar {
+    display: none;
+    width: 100%;
+    background-color: #FBF9EE !important;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+  }
+  .search-bar.is-open { display: block !important; }
+
+  /* Tvinga hela sektionswrappern att ha rätt bakgrund */
+  .shopify-section:has(.header-section),
+  .shopify-section > .header-section {
+    background-color: #FBF9EE !important;
+  }
+
+  .search-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 52px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .search-bar__line {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .search-bar__input {
+    width: 100%;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none;
+    outline: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #1a1a1a;
+    text-transform: uppercase;
+  }
+
+  .search-bar__input::placeholder {
+    color: rgba(26,26,26,0.35);
+  }
+
+  .search-bar__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  
+  .search-bar__results {
+    display: none;
+    padding: 20px 40px 30px;
+    max-height: 420px;
+    overflow-y: auto;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+.search-bar__results {
+  display: none;
+  padding: 20px 40px 30px;
+  max-height: 420px;
+  overflow-y: auto;
+  max-width: 600px;
+  margin: 0 auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+
+.search-bar__results::-webkit-scrollbar {
+  width: 3px;
+}
+
+.search-bar__results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-bar__results::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 0;
+}
+
+  .search-bar__results.has-results { display: block; }
+
+  .search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: opacity 0.2s ease;
+  }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover { opacity: 0.6; }
+
+  .search-result-item__image {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    flex-shrink: 0;
+    
+  }
+
+  .search-result-item__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 8px;
+  }
+
+  .search-result-item__title {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+  }
+
+  .search-result-item__price {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(26,26,26,0.5);
+    white-space: nowrap;
+  }
+
+  .search-result-item__placeholder {
+    width: 52px;
+    height: 52px;
+    background: #f0ece4;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1130px) {
+    .search-bar__results { padding: 16px 20px 24px; }
+  }
+
+  /* MEGAMENY */
+  .mega-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    background-color: #FBF9EE;
+    z-index: 1000;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding: 60px 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  }
+  .menu-item:hover .mega-menu { display: block !important; }
+
+  .mega-menu__inner {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .mega-menu__grid {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 40px;
+    flex: 1;
+  }
+
+  .mega-menu__column {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mega-menu__title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    font-family: 'Jost', sans-serif;
+    color: #1a1a1a;
+  }
+
+  .mega-menu__column ul { list-style: none; padding: 0; margin: 0; }
+  .mega-menu__column li { margin-bottom: 12px; }
+  .mega-menu__column a {
+    font-size: 12px;
+    color: rgba(26,26,26,0.7) !important;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .mega-menu__side-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    opacity: 0.1;
+    line-height: 0.8;
+    align-self: flex-end;
+  }
+
+  /* =============================
+     MOBILE HEADER
+  ============================= */
+  .mobile-header { display: none !important; }
+  .mobile-overlay { display: none !important; }
+  .mobile-panel { display: none !important; }
+
+  @media (max-width: 1130px) {
+    html, body { overflow-x: hidden; }
+    .custom-header { display: none !important; }
+    .mobile-header {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background-color: #F7F2EA;
+      min-height: 70px;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .mobile-overlay { display: none !important; }
+    .mobile-overlay.active { display: block !important; }
+    .mobile-panel {
+      display: flex !important;
+      transform: translateX(-100%);
+    }
+    .mobile-panel--sub {
+      transform: translateX(100vw);
+      left: 0;
+    }
+    .mobile-panel--sub.is-open {
+      transform: translateX(0);
+    }
+    .mobile-panel.is-open { transform: translateX(0); }
+  }
+
+  .mobile-menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-logo {
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .mobile-logo span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    color: #1a1a1a;
+  }
+
+  .mobile-header__icons {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  /* =============================
+     OVERLAY
+  ============================= */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  /* =============================
+     MOBILE PANELS
+  ============================= */
+  @media (max-width: 1130px) {
+    .mobile-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 370px;
+      max-width: 90vw;
+      height: 100%;
+      background-color: #F7F2EA;
+      z-index: 2100;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      flex-direction: column;
+    }
+    .mobile-panel--sub { z-index: 2200; }
+  }
+
+  @media (max-width: 480px) {
+    .mobile-panel { width: 100vw; max-width: 100vw; }
+  }
+
+  .mobile-panel__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    min-height: 70px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .mobile-panel__title {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #1a1a1a;
+  }
+
+  .mobile-close,
+  .mobile-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* =============================
+     MOBILE NAV
+  ============================= */
+  .mobile-nav { padding: 0; }
+  .mobile-nav ul { list-style: none; padding: 0; margin: 0; }
+
+  .mobile-nav__item {
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  .mobile-nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: #1a1a1a;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .mobile-nav__link--parent svg { opacity: 0.4; flex-shrink: 0; }
+
+  .mobile-nav__item--lang {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    border-bottom: none;
+  }
+  .lang-divider { color: #ccc; }
+
+  /* =============================
+     MOBILE SUBMENU
+  ============================= */
+  .mobile-nav--sub { padding: 0; }
+
+  .mobile-sub-group {
+    padding: 24px 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  .mobile-sub-group__title {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+  }
+
+  .mobile-sub-group ul { list-style: none; padding: 0; margin: 0; }
+  .mobile-sub-group li { margin-bottom: 14px; }
+  .mobile-sub-group li:last-child { margin-bottom: 0; }
+
+  .mobile-sub-link {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: rgba(26,26,26,0.6);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mobile-sub-link::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: rgba(26,26,26,0.3);
+    flex-shrink: 0;
+  }
+{% endstylesheet %}
+
+<script>
+(function() {
+  var searchToggle = document.getElementById('searchToggle');
+  var searchToggleMobile = document.getElementById('searchToggleMobile');
+  var searchClose  = document.getElementById('searchClose');
+  var searchBar    = document.getElementById('searchBar');
+  var searchInput  = document.getElementById('searchInput');
+  var searchResults = document.getElementById('searchResults');
+  var searchTimer  = null;
+
+  function openSearch() {
+    searchBar.classList.add('is-open');
+    if (searchInput) searchInput.focus();
+  }
+
+  function closeSearch() {
+    searchBar.classList.remove('is-open');
+    if (searchInput) searchInput.value = '';
+    if (searchResults) {
+      searchResults.classList.remove('has-results');
+      searchResults.innerHTML = '';
+    }
+  }
+
+  function formatMoney(amount) {
+    return parseFloat(amount).toLocaleString('sv-SE', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 });
+  }
+
+  function runSearch(query) {
+    if (query.length < 2) {
+      searchResults.classList.remove('has-results');
+      searchResults.innerHTML = '';
+      return;
+    }
+    fetch('/search/suggest.json?q=' + encodeURIComponent(query) + '&resources[type]=product&resources[limit]=6')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        console.log('Search API response:', JSON.stringify(data));
+        var products = data.resources && data.resources.results && data.resources.results.products || [];
+        if (products.length === 0) {
+          searchResults.classList.remove('has-results');
+          searchResults.innerHTML = '';
+          return;
+        }
+        var html = '';
+        products.forEach(function(p) {
+          var imgSrc = p.featured_image && p.featured_image.url ? p.featured_image.url + '&width=160' : null;
+          var img = imgSrc
+            ? '<img class="search-result-item__image" src="' + imgSrc + '" alt="' + p.title + '">'
+            : '<div class="search-result-item__placeholder"></div>';
+          var price = p.price_min ? formatMoney(p.price_min) : '';
+          html += '<a href="' + p.url + '" class="search-result-item">'
+            + img
+            + '<div class="search-result-item__info">'
+            + '<span class="search-result-item__title">' + p.title + '</span>'
+            + '<span class="search-result-item__price">' + price + '</span>'
+            + '</div></a>';
+        });
+        searchResults.innerHTML = html;
+        searchResults.classList.add('has-results');
+      })
+      .catch(function() {
+        searchResults.classList.remove('has-results');
+      });
+  }
+
+  if (searchToggle) searchToggle.addEventListener('click', openSearch);
+  if (searchToggleMobile) searchToggleMobile.addEventListener('click', openSearch);
+  if (searchClose) searchClose.addEventListener('click', closeSearch);
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function() {
+        runSearch(searchInput.value.trim());
+      }, 250);
+    });
+  }
+
+  var toggleBtn = document.getElementById('mobileMenuToggle');
+  var closeBtn  = document.getElementById('mobileClose');
+  var overlay   = document.getElementById('mobileOverlay');
+  var mainPanel = document.getElementById('mobilePanelMain');
+
+  function openMenu() {
+    mainPanel.classList.add('is-open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAll() {
+    document.querySelectorAll('.mobile-panel').forEach(function(p) {
+      p.classList.remove('is-open');
+    });
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (toggleBtn) toggleBtn.addEventListener('click', openMenu);
+  if (closeBtn)  closeBtn.addEventListener('click', closeAll);
+  if (overlay)   overlay.addEventListener('click', closeAll);
+
+  document.querySelectorAll('.mobile-nav__link--parent').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var index = this.getAttribute('data-submenu');
+      var subPanel = document.getElementById('mobilePanel' + index);
+      if (subPanel) subPanel.classList.add('is-open');
+    });
+  });
+
+  document.querySelectorAll('.mobile-back').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var index = this.getAttribute('data-back');
+      var subPanel = document.getElementById('mobilePanel' + index);
+      if (subPanel) subPanel.classList.remove('is-open');
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Priét Custom Header",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Complimentary delivery, resizing, and engraving."
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "Priét"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Huvudmeny (vänster)",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "extra_menu",
+      "label": "Extrameny (höger, vid ikoner)"
+    },
+    {
+      "type": "header",
+      "content": "Ikon-länkar"
+    },
+    {
+      "type": "url",
+      "id": "account_link",
+      "label": "Länk: Konto-ikon"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_link",
+      "label": "Länk: Wishlist-ikon"
+    },
+    {
+      "type": "url",
+      "id": "cart_link",
+      "label": "Länk: Varukorg-ikon"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Priét Custom Header"
+    }
+  ]
+}
+{% endschema %}

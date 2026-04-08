@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cart-section": {
+      "type": "custom-cart",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "custom-newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/Mask_group_1.png",
+        "heading": "Get the latest news",
+        "placeholder": "EMAIL ADDRESS",
+        "button_text": "Subscribe",
+        "subtext": "By subscribing you agree to our privacy policy.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "cart-section",
+    "newsletter"
+  ]
+}
