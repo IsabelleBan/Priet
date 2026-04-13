@@ -9,6 +9,17 @@
       <p class="custom-collection-page__count">{{ collection.products_count }} results</p>
     </div>
 
+    <div class="custom-collection-metal-filter">
+  <a href="{{ collection.url }}/yellow-gold" 
+     class="custom-collection-metal-filter__btn {% if current_tags contains 'yellow-gold' %}active{% endif %}">
+    YELLOW GOLD
+  </a>
+  <a href="{{ collection.url }}/white-gold" 
+     class="custom-collection-metal-filter__btn {% if current_tags contains 'white-gold' %}active{% endif %}">
+    WHITE GOLD
+  </a>
+</div>
+
     <div class="custom-collection-filter">
       <div class="custom-collection-filter__left">
         <a href="{{ collection.url }}" class="custom-collection-filter__btn {% unless current_tags %}active{% endunless %}">ALL</a>
@@ -24,42 +35,67 @@
     </div>
 
     {%- if collection.products_count > 0 -%}
-      {%- paginate collection.products by 8 -%}
-        <div class="custom-collection-page__grid">
-          {%- for product in collection.products -%}
-            <a href="{{ product.url }}" class="custom-collection-card">
-              <div class="custom-collection-card__image-wrapper">
-                {%- if product.featured_image -%}
-                  {{ product.featured_image | image_url: width: 800 | image_tag:
-                    widths: '400, 600, 800',
-                    class: 'custom-collection-card__image',
-                    loading: 'lazy',
-                    alt: product.title
-                  }}
-                {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'custom-collection-card__image placeholder-svg' }}
-                {%- endif -%}
-              </div>
-              <div class="custom-collection-card__info">
-                <h3 class="custom-collection-card__title">{{ product.title | upcase }}</h3>
-                <p class="custom-collection-card__price">From {{ product.price_min | money }}</p>
-              </div>
-            </a>
-          {%- endfor -%}
-        </div>
+  {%- paginate collection.products by 8 -%}
+    <div class="custom-collection-page__grid">
+      {%- for product in collection.products -%}
+        <div class="custom-collection-card" data-tags="{{ product.tags | join: ',' | downcase }}">
+  <a href="{{ product.url }}" class="custom-collection-card__link">
+    <div class="custom-collection-card__image-wrapper">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 800 | image_tag:
+          widths: '400, 600, 800',
+          class: 'custom-collection-card__image',
+          loading: 'lazy',
+          alt: product.title
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'custom-collection-card__image placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    <div class="custom-collection-card__info">
+      <h3 class="custom-collection-card__title">{{ product.title | upcase }}</h3>
+      <p class="custom-collection-card__price">From {{ product.price_min | money }}</p>
+    </div>
+  </a>
 
-        {%- if paginate.next -%}
-          <div class="custom-collection-page__footer">
-            <a href="{{ paginate.next.url }}" class="custom-collection-page__see-more">SEE MORE</a>
-          </div>
+  {%- for tag in product.tags -%}
+    {%- if tag contains 'pair:' -%}
+      {%- assign pair_url = tag | remove: 'pair:' -%}
+      <div class="custom-collection-card__variants">
+        {%- if product.tags contains 'yellow-gold' -%}
+          <span class="custom-collection-card__variant custom-collection-card__variant--yellow active"></span>
+          <a href="{{ pair_url }}" class="custom-collection-card__variant custom-collection-card__variant--white"></a>
+        {%- elsif product.tags contains 'white-gold' -%}
+          <a href="{{ pair_url }}" class="custom-collection-card__variant custom-collection-card__variant--yellow"></a>
+          <span class="custom-collection-card__variant custom-collection-card__variant--white active"></span>
         {%- endif -%}
-
-      {%- endpaginate -%}
-    {%- else -%}
-      <div class="custom-collection-page__empty">
-        <p>No products found in this collection.</p>
       </div>
     {%- endif -%}
+  {%- endfor -%}
+
+</div>
+{%- endfor -%}
+</div>
+
+    {%- if paginate.next -%}
+      <div id="is-trigger"
+           data-next-url="{{ paginate.next.url }}"
+           class="custom-collection-page__footer">
+        <span class="is-loader" style="display:none;">
+          <span class="is-loader__dot"></span>
+          <span class="is-loader__dot"></span>
+          <span class="is-loader__dot"></span>
+        </span>
+      </div>
+    {%- endif -%}
+
+  {%- endpaginate -%}
+
+{%- else -%}
+  <div class="custom-collection-page__empty">
+    <p>No products found in this collection.</p>
+  </div>
+{%- endif -%}
 
   </div>
 </div>
@@ -123,9 +159,10 @@
 }
 
 .custom-collection-page__inner {
-  max-width: 1400px;
+  max-width: 100% !important;
+  width: 100%;
   margin: 0 auto;
-  padding: 60px 40px 100px;
+  padding: 60px 160px 100px !important;
   box-sizing: border-box;
 }
 
@@ -303,42 +340,39 @@
 .custom-collection-page__grid {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
-  gap: 40px 20px !important;
+  gap: 30px !important;  
 }
 
 .custom-collection-card {
   text-decoration: none !important;
   color: #1a1a1a !important;
-  display: flex !important;
+  display: flex;
   flex-direction: column !important;
-  background-color: #ffffff !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }
 
 .custom-collection-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  box-shadow: none !important;
 }
 
 .custom-collection-card__image-wrapper {
   overflow: hidden !important;
-  background-color: #ffffff !important;
-  height: 280px !important;
+  background-color: rgb(248, 248, 248) !important;
+  height: 650px !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  padding: 15px !important;
+  padding: 50px !important;
   box-sizing: border-box !important;
 }
 
 .custom-collection-card__image {
-  max-width: 100% !important;
-  max-height: 100% !important;
-  width: auto !important;
-  height: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: unset !important;
+  max-height: unset !important;
   object-fit: contain !important;
   transition: transform 0.4s ease;
 }
@@ -348,13 +382,14 @@
 }
 
 .custom-collection-card__info {
-  padding: 16px 20px 40px !important;
+  padding: 0 30px 25px 30px !important;
   text-align: center !important;
 }
 
 .custom-collection-card__title {
   font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-weight: 300;
+  padding-top: 10px; 
   font-style: italic;
   font-size: 18px;
   margin: 0 0 8px;
@@ -400,9 +435,109 @@
   padding: 60px 0;
 }
 
+.is-loader {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.is-loader__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #1a1a1a;
+  animation: is-bounce 1.2s infinite ease-in-out;
+}
+
+.is-loader__dot:nth-child(2) { animation-delay: 0.2s; }
+.is-loader__dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes is-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+  40%            { transform: scale(1);   opacity: 1;   }
+}
+
+.custom-collection-metal-filter {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.custom-collection-metal-filter__btn {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.15);
+  cursor: pointer;
+  font-family: var(--font-body, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  padding: 10px 20px;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.custom-collection-metal-filter__btn.active,
+.custom-collection-metal-filter__btn:hover {
+  color: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
+.custom-collection-card__variants {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.custom-collection-card__variant {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: block;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.custom-collection-card__variant--yellow {
+  background-color: #D4AF37;
+}
+
+.custom-collection-card__variant--white {
+  background-color: #E8E8E8;
+  border: 1px solid #C0C0C0;
+}
+
+.custom-collection-card__variant.active {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #1a1a1a;
+}
+
+.custom-collection-card__variant:not(.active):hover {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0,0,0,0.3);
+}
+
+@media screen and (max-width: 1800px) {
+  .custom-collection-page__inner {
+    padding: 0 40px !important;
+  }
+  .custom-collection-card__image-wrapper {
+    height: 400px !important;
+    padding: 30px !important;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .custom-collection-card__image-wrapper {
+    height: 300px !important;
+    padding: 30px !important;
+  }
+}
+
 @media screen and (max-width: 989px) {
   .custom-collection-page__inner {
-    padding: 40px 16px 80px;
+    padding: 40px 16px 80px !important;
   }
   .custom-collection-page__grid {
     grid-template-columns: repeat(2, 1fr) !important;
@@ -412,61 +547,163 @@
     height: 180px !important;
     padding: 10px !important;
   }
-  .custom-collection-page__heading {
-    font-size: 26px;
-  }
-  .custom-collection-filter__left {
-    gap: 20px;
-  }
-  .sortby-panel {
-    width: 100vw;
-    max-width: 100vw;
-  }
 }
 {% endstylesheet %}
 
 <script>
 (function() {
-  var sortByToggle = document.getElementById('sortByToggle');
-  var sortByClose  = document.getElementById('sortByClose');
+  // SORT BY PANEL
+  var sortByToggle  = document.getElementById('sortByToggle');
+  var sortByClose   = document.getElementById('sortByClose');
   var sortByOverlay = document.getElementById('sortByOverlay');
-  var sortByPanel  = document.getElementById('sortByPanel');
+  var sortByPanel   = document.getElementById('sortByPanel');
 
-  function openPanel() {
+  function openPanel()  {
     sortByPanel.classList.add('is-open');
     sortByOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
-
   function closePanel() {
     sortByPanel.classList.remove('is-open');
     sortByOverlay.classList.remove('active');
     document.body.style.overflow = '';
   }
 
-  if (sortByToggle) sortByToggle.addEventListener('click', openPanel);
-  if (sortByClose)  sortByClose.addEventListener('click', closePanel);
+  if (sortByToggle)  sortByToggle.addEventListener('click', openPanel);
+  if (sortByClose)   sortByClose.addEventListener('click', closePanel);
   if (sortByOverlay) sortByOverlay.addEventListener('click', closePanel);
 
-  // Toggle metal section
-  var metalToggle = document.getElementById('metalToggle');
+  var metalToggle  = document.getElementById('metalToggle');
   var metalOptions = document.getElementById('metalOptions');
   if (metalToggle) {
     metalToggle.addEventListener('click', function() {
-      var isHidden = metalOptions.classList.toggle('sortby-panel__options--hidden');
-      metalToggle.querySelector('.sortby-panel__plus').textContent = isHidden ? '+' : '—';
+      var hidden = metalOptions.classList.toggle('sortby-panel__options--hidden');
+      metalToggle.querySelector('.sortby-panel__plus').textContent = hidden ? '+' : '—';
     });
   }
 
-  // Toggle style section
-  var styleToggle = document.getElementById('styleToggle');
+  var styleToggle  = document.getElementById('styleToggle');
   var styleOptions = document.getElementById('styleOptions');
   if (styleToggle) {
     styleToggle.addEventListener('click', function() {
-      var isHidden = styleOptions.classList.toggle('sortby-panel__options--hidden');
-      styleToggle.querySelector('.sortby-panel__plus').textContent = isHidden ? '+' : '—';
+      var hidden = styleOptions.classList.toggle('sortby-panel__options--hidden');
+      styleToggle.querySelector('.sortby-panel__plus').textContent = hidden ? '+' : '—';
     });
   }
+
+  // METAL FILTER
+  var metalFilterBtns = document.querySelectorAll('.custom-collection-metal-filter__btn');
+  var activeFilter = 'all';
+
+  function applyFilter() {
+    var cards = document.querySelectorAll('.custom-collection-card');
+    cards.forEach(function(card) {
+      if (activeFilter === 'all') {
+        card.style.display = '';
+      } else {
+        var tags = card.getAttribute('data-tags') || '';
+        card.style.display = tags.includes(activeFilter) ? '' : 'none';
+      }
+    });
+  }
+
+  metalFilterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      metalFilterBtns.forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      activeFilter = this.getAttribute('data-metal');
+      applyFilter();
+    });
+  });
+
+  // HYBRID PAGINATION
+  var trigger = document.getElementById('is-trigger');
+  var grid    = document.querySelector('.custom-collection-page__grid');
+
+  if (!trigger || !grid) return;
+
+  var loading = false;
+  var loader  = trigger.querySelector('.is-loader');
+
+  // Nollställ om vi är på sida 1
+  if (!window.location.search.includes('page=')) {
+    sessionStorage.removeItem('collection-auto-done');
+  }
+
+  var autoLoadDone = sessionStorage.getItem('collection-auto-done') === 'true';
+
+  // Om auto redan är klar → visa direkt som klickbar knapp, kör ej observer
+  if (autoLoadDone) {
+    var nextUrl = trigger.dataset.nextUrl;
+    if (nextUrl) {
+      trigger.innerHTML = '<a href="' + nextUrl + '" class="custom-collection-page__see-more">SEE MORE</a>';
+    } else {
+      trigger.remove();
+    }
+    return; // hoppa över resten av koden
+  }
+
+  function showLoader() {
+    loader.style.display = 'flex';
+  }
+
+  function hideLoader() {
+    loader.style.display = 'none';
+  }
+
+  function showSeeMore(url) {
+    observer.disconnect();
+    trigger.innerHTML = '<a href="' + url + '" class="custom-collection-page__see-more">SEE MORE</a>';
+  }
+
+  function loadMore(url) {
+    if (loading) return;
+    loading = true;
+    showLoader();
+
+    fetch(url)
+      .then(function(res) { return res.text(); })
+      .then(function(html) {
+        var doc        = new DOMParser().parseFromString(html, 'text/html');
+        var newCards   = doc.querySelectorAll('.custom-collection-card');
+        var newTrigger = doc.getElementById('is-trigger');
+
+        newCards.forEach(function(card) {
+          grid.appendChild(card);
+        });
+
+        applyFilter();
+        hideLoader();
+
+        if (newTrigger && newTrigger.dataset.nextUrl) {
+          // Auto-laddning klar → markera och visa SEE MORE
+          autoLoadDone = true;
+          sessionStorage.setItem('collection-auto-done', 'true');
+          showSeeMore(newTrigger.dataset.nextUrl);
+        } else {
+          // Inga fler sidor
+          trigger.remove();
+          observer.disconnect();
+        }
+      })
+      .catch(function(err) {
+        console.error('Pagination fel:', err);
+        hideLoader();
+      })
+      .finally(function() {
+        loading = false;
+      });
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    if (!entries[0].isIntersecting || loading) return;
+    var nextUrl = trigger.dataset.nextUrl;
+    if (!nextUrl) return;
+    loadMore(nextUrl);
+  }, { rootMargin: '200px' });
+
+  observer.observe(trigger);
+
 })();
 </script>
 
