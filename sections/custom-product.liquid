@@ -6,22 +6,18 @@
   <div class="custom-product__main">
 
     <!-- IMAGES -->
+    <!-- IMAGES -->
     <div class="custom-product__gallery">
-      <div class="custom-product__thumbnails">
-        {%- for image in product.images -%}
-          <button class="custom-product__thumb {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-            <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | escape }}" width="120" height="120" loading="lazy">
-          </button>
-        {%- endfor -%}
-      </div>
-      <div class="custom-product__main-image">
-        {%- for image in product.images -%}
-          <div class="custom-product__image-slide {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-            <img src="{{ image | image_url: width: 900 }}" alt="{{ image.alt | escape }}" width="900" height="900" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
-          </div>
-        {%- endfor -%}
-      </div>
-    </div>
+      {%- for image in product.images -%}
+    <div class="custom-product__image-slide">
+      <img src="{{ image | image_url: width: 1200 }}" 
+           alt="{{ image.alt | escape }}" 
+           width="{{ image.width }}"
+           height="{{ image.height }}"
+           loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+        </div>
+          {%- endfor -%}
+        </div>
 
     <!-- INFO -->
     <div class="custom-product__info">
@@ -320,9 +316,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  max-width: 1400px;
+ 
   margin: 0 auto;
-  padding: 60px 40px 100px;
+  padding: 60px 160px 100px;
   box-sizing: border-box;
   align-items: start;
 }
@@ -354,9 +350,11 @@
 
 .custom-product__gallery {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 40px;
   position: sticky;
-  top: 20px;
+  top: 0;
+  align-self: start;
 }
 
 .custom-product__thumbnails {
@@ -383,16 +381,17 @@
 .custom-product__thumb img { width: 100%; height: 100%; object-fit: contain; }
 
 .custom-product__main-image { flex: 1; }
-.custom-product__image-slide { display: none; }
+.custom-product__image-slide {
+  width: 100%;
+  background: rgb(248, 248, 248);
+}
 .custom-product__image-slide.active { display: block; }
 
 .custom-product__image-slide img {
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: contain;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
 
 .custom-product__info { padding-top: 10px; }
@@ -791,6 +790,12 @@
 
 .custom-product__mid-hero-image { width: 100%; height: 100%; object-fit: cover; }
 
+@media screen and (max-width: 1800px) {
+  .custom-product__main {
+    padding: 60px 140px 100px;
+  }
+}
+
 @media screen and (max-width: 989px) {
   .custom-product__main {
     grid-template-columns: 1fr;
@@ -813,7 +818,11 @@
     height: 300px;
   }
 
-  .custom-product__gallery { flex-direction: column-reverse; position: static; }
+  .custom-product__gallery {
+    gap: 15px !important;
+    position: static; 
+  }
+
   .custom-product__thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
   .custom-product__thumb { flex-shrink: 0; }
   .custom-product__related-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -827,20 +836,7 @@
 
 <script>
 (function() {
-  // GALLERY
-  var thumbs = document.querySelectorAll('.custom-product__thumb');
-  var slides = document.querySelectorAll('.custom-product__image-slide');
-
-  thumbs.forEach(function(thumb) {
-    thumb.addEventListener('click', function() {
-      var index = this.getAttribute('data-index');
-      thumbs.forEach(function(t) { t.classList.remove('active'); });
-      slides.forEach(function(s) { s.classList.remove('active'); });
-      this.classList.add('active');
-      document.querySelector('.custom-product__image-slide[data-index="' + index + '"]').classList.add('active');
-    });
-  });
-
+ 
   // VARIANT SELECTION
   var selectedOptions = {};
   var productData = {{ product.variants | json }};

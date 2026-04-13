@@ -23,6 +23,47 @@
         "button_link": "shopify://collections/all"
       }
     },
+    "custom_banner_grid_j7Fc33": {
+      "type": "custom-banner-grid",
+      "blocks": {
+        "banner_7cpUWm": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/Image_1.png",
+            "title": "Engagement rings",
+            "link": "shopify://collections/engagement-rings"
+          }
+        },
+        "banner_8YRYTe": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/Image_2.png",
+            "title": "Wedding rings",
+            "link": "shopify://collections/wedding-rings"
+          }
+        },
+        "banner_Li9qnH": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/Image_3.png",
+            "title": "Diamonds",
+            "link": "shopify://pages/diamond-guide"
+          }
+        }
+      },
+      "block_order": [
+        "banner_7cpUWm",
+        "banner_8YRYTe",
+        "banner_Li9qnH"
+      ],
+      "name": "Custom Banner Grid",
+      "settings": {
+        "heading": "Shop by category",
+        "background_color": "#fbf9ee",
+        "padding_top": 40,
+        "padding_bottom": 120
+      }
+    },
     "custom_categories": {
       "type": "custom-categories",
       "blocks": {
@@ -225,47 +266,6 @@
         "padding_bottom": 60
       }
     },
-    "custom_banner_grid_j7Fc33": {
-      "type": "custom-banner-grid",
-      "blocks": {
-        "banner_7cpUWm": {
-          "type": "banner",
-          "settings": {
-            "image": "shopify://shop_images/Image_1.png",
-            "title": "Engagement rings",
-            "link": "shopify://collections/engagement-rings"
-          }
-        },
-        "banner_8YRYTe": {
-          "type": "banner",
-          "settings": {
-            "image": "shopify://shop_images/Image_2.png",
-            "title": "Wedding rings",
-            "link": "shopify://collections/wedding-rings"
-          }
-        },
-        "banner_Li9qnH": {
-          "type": "banner",
-          "settings": {
-            "image": "shopify://shop_images/Image_3.png",
-            "title": "Diamonds",
-            "link": "shopify://pages/diamond-guide"
-          }
-        }
-      },
-      "block_order": [
-        "banner_7cpUWm",
-        "banner_8YRYTe",
-        "banner_Li9qnH"
-      ],
-      "name": "Custom Banner Grid",
-      "settings": {
-        "heading": "Shop by category",
-        "background_color": "#fbf9ee",
-        "padding_top": 40,
-        "padding_bottom": 120
-      }
-    },
     "custom_story_6reHX8": {
       "type": "custom-story",
       "name": "Our Story",
@@ -356,14 +356,14 @@
   },
   "order": [
     "custom_hero_B8NyjR",
-    "custom_categories",
+    "custom_banner_grid_j7Fc33",
     "custom_hero_mbipTr",
     "custom_featured_products_nB7KhY",
     "custom_story",
     "custom_featured_products_FL8Wck",
-    "custom_story_i9Hffk",
-    "custom_banner_grid_j7Fc33",
     "custom_story_6reHX8",
+    "custom_categories",
+    "custom_story_i9Hffk",
     "custom_instagram_banner_jEnUqR",
     "custom_newsletter_wtckKP"
   ]
