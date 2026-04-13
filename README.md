@@ -3,7 +3,7 @@
 **Stack:** Shopify (Liquid), JavaScript, Lovable/AI-Integration, External APIs
 
 ## Project Overview
-A highly complex, custom-built Shopify store for the diamond industry. Built from scratch without a legacy site, featuring a unique UI where every section is custom-engineered to overlay the core theme.
+Custom-built Shopify store for the jewelry industry. Built from scratch without a legacy site, featuring a unique UI where every section is custom-engineered to overlay the core theme.
 
 ## Key Technical Achievements
 * **External API Integration:** Successfully injected a custom application into the Shopify environment to handle complex real-time API calls to Indian diamond exchanges.
@@ -11,5 +11,5 @@ A highly complex, custom-built Shopify store for the diamond industry. Built fro
 * **Hybrid Development Workflow:** Utilized AI-assisted development (Lovable) to build the core API-logic, which was then manually integrated and hardened for production within the Shopify theme.
 
 ## Challenges & Solutions
-* **Challenge:** Displaying thousands of live data points (diamonds) without compromising site speed.
+* **Challenge:** Displaying a large number of live data points (diamonds) without compromising site speed.
 * **Solution:** Optimized the API fetch cycles and implemented a custom filtering UI to handle large datasets seamlessly.
