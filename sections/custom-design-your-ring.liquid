@@ -1,0 +1,866 @@
+{% comment %}
+  ============================================================
+  SECTION: Design Your Own Ring
+  Fil: sections/section-design-your-ring.liquid
+  ============================================================
+
+  Om bilduppladdning:
+  Shopify's inbyggda formulär stödjer ej filuppladdning.
+  Bilderna konverteras till base64 och skickas via Netlify Forms,
+  Formspree eller liknande. Se kommentar vid <form>-taggen nedan.
+  ============================================================
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8" defer></script>
+<script>
+  UPLOADCARE_PUBLIC_KEY = '4d6d4b7a64633d68f3d6';
+  UPLOADCARE_LOCALE = 'sv';
+  UPLOADCARE_TABS = 'file camera';
+  UPLOADCARE_PREVIEW_STEP = true;
+  UPLOADCARE_LIVE = false;
+</script>
+
+<style>
+  body {
+    --color-background: {{ section.settings.background_color }} !important;
+  }
+
+  .dyr-section {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    color: #1a1a1a;
+  }
+
+  .dyr-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+  .dyr-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: #1a1a1a;
+    margin-bottom: 0.75rem;
+  }
+  .dyr-title em { font-style: italic; }
+  .dyr-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .dyr-step-heading {
+    margin-bottom: 8px;
+    font-size: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    color: #1a1a1a;
+    font-weight: 400;
+  }
+
+  .dyr-step-subheading {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666;
+    font-style: italic; 
+    margin-bottom: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* ── Steg ── */
+  .dyr-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 3rem;
+  }
+
+  .dyr-step {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .dyr-step-num {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 0.6rem;
+  }
+
+  .dyr-step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .dyr-step-divider {
+    width: 30px;
+    height: 1px;
+    background: #ddd;
+    margin: 0 auto 1rem;
+  }
+
+  .dyr-step-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── Divider ── */
+  .dyr-divider {
+    border: none;
+    border-top: 1px solid #e8e4de;
+    margin: 2.5rem 0;
+  }
+
+  .dyr-sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e8e4de;
+  }
+
+  .dyr-fg { margin-bottom: 1.75rem; }
+
+  .dyr-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  .dyr-label .req { color: #c0392b; margin-left: 2px; }
+
+  .dyr-hint {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .dyr-input,
+  .dyr-select,
+  .dyr-textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0 1rem;
+    height: 44px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #1a1a1a;
+    background: #fff;
+    transition: border-color 0.2s;
+  }
+  .dyr-input:focus,
+  .dyr-select:focus,
+  .dyr-textarea:focus {
+    outline: none;
+    border-color: #999;
+  }
+  .dyr-input::placeholder,
+  .dyr-textarea::placeholder { color: #bbb; }
+
+  .dyr-textarea {
+    height: 120px;
+    padding: 0.75rem 1rem;
+    resize: vertical;
+  }
+
+  .dyr-textarea-sm {
+    height: 80px;
+  }
+
+  .dyr-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+  }
+
+  .dyr-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .dyr-cb-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .dyr-cb-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .dyr-cb-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: #1a1a1a;
+  }
+  .dyr-cb-item span {
+    font-size: 14px;
+    font-weight: 300;
+    color: #1a1a1a;
+  }
+
+  .dyr-uc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .dyr-uc-slot {
+    background: #f7f5f2;
+    border: 1px dashed #ccc;
+    border-radius: 12px;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .dyr-uc-slot .dyr-slot-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 4px;
+  }
+  .uploadcare--widget__button {
+    font-family: 'Jost', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.08em !important;
+    background: #666 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 6px 16px !important;
+    cursor: pointer !important;
+  }
+  .uploadcare--widget__file-name {
+    font-size: 11px !important;
+    color: #888 !important;
+    font-family: 'Jost', sans-serif !important;
+  }
+
+  .dyr-privacy-box {
+    background: #ffff;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .dyr-submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.75rem;
+    border-top: 1px solid #e8e4de;
+    margin-top: 0.5rem;
+  }
+  .dyr-required-note {
+    font-size: 11px;
+    color: #aaa;
+  }
+  .dyr-submit-btn {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 0 2.5rem;
+    height: 48px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .dyr-submit-btn:hover { opacity: 0.8; }
+  .dyr-submit-btn:active { transform: scale(0.97); }
+
+  .dyr-success {
+    background: #edf7ed;
+    border: 1px solid #b2ddb3;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-size: 14px;
+    color: #2d6a2e;
+    display: none;
+    margin-top: 1.5rem;
+  }
+
+  .dyr-err { border-color: #c0392b !important; }
+
+  @media (max-width: 580px) {
+    .dyr-title { font-size: 34px; }
+    .dyr-steps { grid-template-columns: 1fr; }
+    .dyr-two-col { grid-template-columns: 1fr; }
+    .dyr-submit-row { flex-direction: column; gap: 1.25rem; align-items: flex-start; }
+  }
+</style>
+
+<section class="dyr-section">
+
+  <div class="dyr-step-heading">{{ section.settings.steps_heading }}</div>
+  <div class="dyr-step-subheading">{{ section.settings.steps_subheading }}</div>
+
+  <!-- Processteg -->
+  <div class="dyr-steps">
+    <div class="dyr-step">
+      <div class="dyr-step-num">01</div>
+      <div class="dyr-step-title">{{ section.settings.step1_title }}</div>
+      <div class="dyr-step-divider"></div>
+      <div class="dyr-step-desc">{{ section.settings.step1_desc }}</div>
+    </div>
+    <div class="dyr-step">
+      <div class="dyr-step-num">02</div>
+      <div class="dyr-step-title">{{ section.settings.step2_title }}</div>
+      <div class="dyr-step-divider"></div>
+      <div class="dyr-step-desc">{{ section.settings.step2_desc }}</div>
+    </div>
+    <div class="dyr-step">
+      <div class="dyr-step-num">03</div>
+      <div class="dyr-step-title">{{ section.settings.step3_title }}</div>
+      <div class="dyr-step-divider"></div>
+      <div class="dyr-step-desc">{{ section.settings.step3_desc }}</div>
+    </div>
+  </div>
+
+  <hr class="dyr-divider">
+
+  <form
+    id="dyr-form"
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    enctype="multipart/form-data"
+    novalidate
+  >
+
+    <input type="hidden" name="access_key" value="0bc46731-8a04-4cfa-a7ea-38e480f6c740">
+    <input type="hidden" name="redirect" value="false">
+    <input type="checkbox" name="botcheck" style="display:none">
+
+    <p class="dyr-sec-title">{{ section.settings.design_section_title }}</p>
+
+    <div class="dyr-fg">
+      <label class="dyr-label" for="dyr-desc">{{ section.settings.desc_label }}</label>
+      <p class="dyr-hint">{{ section.settings.desc_hint }}</p>
+      <textarea
+        class="dyr-textarea"
+        id="dyr-desc"
+        name="beskrivning"
+        placeholder="{{ section.settings.desc_placeholder }}"
+      ></textarea>
+    </div>
+
+    <div class="dyr-fg">
+      <label class="dyr-label" for="dyr-metal">{{ section.settings.metal_label }} <span class="req">*</span></label>
+      <select class="dyr-select" id="dyr-metal" name="metall" required>
+        <option value="">{{ section.settings.metal_placeholder }}</option>
+        <option value="585 Gult guld (14k)">585 Gult guld (14k)</option>
+        <option value="585 Vitguld (14k)">585 Vitguld (14k)</option>
+        <option value="585 Roséguld (14k)">585 Roséguld (14k)</option>
+        <option value="750 Gult guld (18k)">750 Gult guld (18k)</option>
+        <option value="750 Vitguld (18k)">750 Vitguld (18k)</option>
+        <option value="750 Roséguld (18k)">750 Roséguld (18k)</option>
+        <option value="950 Platina">950 Platina</option>
+        <option value="925 Silver">925 Silver</option>
+        <option value="Vet ej / Rådgivning önskas">Vet ej / Rådgivning önskas</option>
+      </select>
+    </div>
+
+    <div class="dyr-fg">
+      <label class="dyr-label">{{ section.settings.diamond_label }}</label>
+      <p class="dyr-hint">{{ section.settings.diamond_hint }}</p>
+      <div class="dyr-cb-group">
+        <label class="dyr-cb-item">
+          <input type="checkbox" name="diamanter[]" value="Naturliga">
+          <span>{{ section.settings.diamond_natural }}</span>
+        </label>
+        <label class="dyr-cb-item">
+          <input type="checkbox" name="diamanter[]" value="Labbodlade">
+          <span>{{ section.settings.diamond_lab }}</span>
+        </label>
+        <label class="dyr-cb-item">
+          <input type="checkbox" name="diamanter[]" value="Vet ej">
+          <span>{{ section.settings.diamond_unknown }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="dyr-fg">
+      <label class="dyr-label">{{ section.settings.images_label }}</label>
+      <p class="dyr-hint">{{ section.settings.images_hint }}</p>
+      <div class="dyr-uc-grid">
+        <div class="dyr-uc-slot">
+          <div class="dyr-slot-label">Bild 1</div>
+          <input type="hidden" role="uploadcare-uploader" name="bild_1" data-crop="disabled">
+        </div>
+        <div class="dyr-uc-slot">
+          <div class="dyr-slot-label">Bild 2</div>
+          <input type="hidden" role="uploadcare-uploader" name="bild_2" data-crop="disabled">
+        </div>
+        <div class="dyr-uc-slot">
+          <div class="dyr-slot-label">Bild 3</div>
+          <input type="hidden" role="uploadcare-uploader" name="bild_3" data-crop="disabled">
+        </div>
+      </div>
+    </div>
+
+    <div class="dyr-fg">
+      <label class="dyr-label" for="dyr-refs">{{ section.settings.refs_label }}</label>
+      <p class="dyr-hint">{{ section.settings.refs_hint }}</p>
+      <textarea
+        class="dyr-textarea dyr-textarea-sm"
+        id="dyr-refs"
+        name="referenslänkar"
+        placeholder="{{ section.settings.refs_placeholder }}"
+      ></textarea>
+    </div>
+
+    <div class="dyr-fg">
+      <label class="dyr-label" for="dyr-budget">{{ section.settings.budget_label }}</label>
+      <input
+        type="text"
+        class="dyr-input"
+        id="dyr-budget"
+        name="budget"
+        placeholder="{{ section.settings.budget_placeholder }}"
+      >
+    </div>
+
+    <hr class="dyr-divider">
+
+    <p class="dyr-sec-title">{{ section.settings.contact_section_title }}</p>
+
+    <div class="dyr-fg">
+      <label class="dyr-label" for="dyr-name">{{ section.settings.name_label }} <span class="req">*</span></label>
+      <input
+        type="text"
+        class="dyr-input"
+        id="dyr-name"
+        name="namn"
+        placeholder="{{ section.settings.name_placeholder }}"
+        required
+      >
+    </div>
+
+    <div class="dyr-two-col dyr-fg">
+      <div>
+        <label class="dyr-label" for="dyr-email">{{ section.settings.email_label }} <span class="req">*</span></label>
+        <input
+          type="email"
+          class="dyr-input"
+          id="dyr-email"
+          name="email"
+          placeholder="{{ section.settings.email_placeholder }}"
+          required
+        >
+      </div>
+      <div>
+        <label class="dyr-label" for="dyr-phone">{{ section.settings.phone_label }} <span class="req">*</span></label>
+        <input
+          type="tel"
+          class="dyr-input"
+          id="dyr-phone"
+          name="telefon"
+          placeholder="{{ section.settings.phone_placeholder }}"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="dyr-fg">
+      <label class="dyr-label" for="dyr-datum">{{ section.settings.date_label }}</label>
+      <p class="dyr-hint">{{ section.settings.date_hint }}</p>
+      <input
+        type="date"
+        class="dyr-input"
+        id="dyr-datum"
+        name="datum"
+      >
+    </div>
+
+    <hr class="dyr-divider">
+
+    <div class="dyr-privacy-box">
+      {{ section.settings.privacy_text }}
+    </div>
+
+    <div class="dyr-fg">
+      <div class="dyr-cb-group">
+        <label class="dyr-cb-item">
+          <input type="checkbox" name="samtycke[]" value="e-post">
+          <span>{{ section.settings.consent_email }}</span>
+        </label>
+        <label class="dyr-cb-item">
+          <input type="checkbox" name="samtycke[]" value="telefon">
+          <span>{{ section.settings.consent_phone }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="dyr-submit-row">
+      <p class="dyr-required-note">{{ section.settings.required_note }}</p>
+      <button type="submit" class="dyr-submit-btn">{{ section.settings.submit_btn }}</button>
+    </div>
+
+    <div class="dyr-success" id="dyr-success">
+      {{ section.settings.success_msg }}
+    </div>
+
+  </form>
+
+</section>
+
+<script>
+  document.getElementById('dyr-form').addEventListener('submit', function(e) {
+    var valid = true;
+    var required = ['dyr-name', 'dyr-email', 'dyr-phone', 'dyr-metal'];
+    required.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.classList.add('dyr-err');
+        valid = false;
+      } else {
+        el.classList.remove('dyr-err');
+      }
+    });
+    if (!valid) {
+      e.preventDefault();
+      alert('Vänligen fyll i alla obligatoriska fält (markerade med *).');
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Design Your Own Ring",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Utseende"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Bakgrundsfärg",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Processteg"
+    },
+    {
+      "type": "text",
+      "id": "steps_heading",
+      "label": "Rubrik",
+      "default": "Steg för steg"
+    },
+    {
+      "type": "text",
+      "id": "steps_subheading",
+      "label": "Underrubrik",
+      "default": "Från idé till ditt helt unika smycke"
+    },
+    {
+      "type": "text",
+      "id": "step1_title",
+      "label": "Steg 1 – rubrik",
+      "default": "Skicka in idé"
+    },
+    {
+      "type": "textarea",
+      "id": "step1_desc",
+      "label": "Steg 1 – beskrivning",
+      "default": "Fyll i formuläret nedan med bilder och önskemål så återkommer vi inom 2 arbetsdagar."
+    },
+    {
+      "type": "text",
+      "id": "step2_title",
+      "label": "Steg 2 – rubrik",
+      "default": "Konsultation"
+    },
+    {
+      "type": "textarea",
+      "id": "step2_desc",
+      "label": "Steg 2 – beskrivning",
+      "default": "Vår guldsmed kontaktar dig personligen för att diskutera detaljer, material och budget."
+    },
+    {
+      "type": "text",
+      "id": "step3_title",
+      "label": "Steg 3 – rubrik",
+      "default": "Skapandet"
+    },
+    {
+      "type": "textarea",
+      "id": "step3_desc",
+      "label": "Steg 3 – beskrivning",
+      "default": "Din ring tillverkas för hand av våra guldsmeder med omsorg om varje detalj."
+    },
+    {
+      "type": "header",
+      "content": "Designfält"
+    },
+    {
+      "type": "text",
+      "id": "design_section_title",
+      "label": "Sektionsrubrik – design",
+      "default": "Din design"
+    },
+    {
+      "type": "text",
+      "id": "desc_label",
+      "label": "Beskrivning – etikett",
+      "default": "Beskrivning"
+    },
+    {
+      "type": "text",
+      "id": "desc_hint",
+      "label": "Beskrivning – hjälptext",
+      "default": "Här beskriver du hur du önskar din design. Har du specifika mått eller detaljer?"
+    },
+    {
+      "type": "text",
+      "id": "desc_placeholder",
+      "label": "Beskrivning – platshållartext",
+      "default": "T.ex. en solitärring med oval diamant i gult guld, slank skena, ca 1,5 karat..."
+    },
+    {
+      "type": "text",
+      "id": "metal_label",
+      "label": "Metall – etikett",
+      "default": "Välj en metall"
+    },
+    {
+      "type": "text",
+      "id": "metal_placeholder",
+      "label": "Metall – platshållare i dropdown",
+      "default": "— Välj metall —"
+    },
+    {
+      "type": "text",
+      "id": "diamond_label",
+      "label": "Diamanter – etikett",
+      "default": "Önskar du naturliga eller labbodlade diamanter?"
+    },
+    {
+      "type": "text",
+      "id": "diamond_hint",
+      "label": "Diamanter – hjälptext",
+      "default": "För diamantsmycken"
+    },
+    {
+      "type": "text",
+      "id": "diamond_natural",
+      "label": "Diamanter – alternativ 1",
+      "default": "Naturliga"
+    },
+    {
+      "type": "text",
+      "id": "diamond_lab",
+      "label": "Diamanter – alternativ 2",
+      "default": "Labbodlade"
+    },
+    {
+      "type": "text",
+      "id": "diamond_unknown",
+      "label": "Diamanter – alternativ 3",
+      "default": "Vet ej"
+    },
+    {
+      "type": "text",
+      "id": "images_label",
+      "label": "Bilder – etikett",
+      "default": "Inspirationsbilder (max 3 st)"
+    },
+    {
+      "type": "text",
+      "id": "images_hint",
+      "label": "Bilder – hjälptext",
+      "default": "Ladda upp foton, skisser eller Pinterest-bilder som faller dig i smaken."
+    },
+    {
+      "type": "text",
+      "id": "refs_label",
+      "label": "Referenslänkar – etikett",
+      "default": "Referenslänkar"
+    },
+    {
+      "type": "text",
+      "id": "refs_hint",
+      "label": "Referenslänkar – hjälptext",
+      "default": "Inspiration på designs som faller er i smaken (Pinterest, Instagram, webbsidor...)"
+    },
+    {
+      "type": "text",
+      "id": "refs_placeholder",
+      "label": "Referenslänkar – platshållartext",
+      "default": "https://pinterest.com/..."
+    },
+    {
+      "type": "text",
+      "id": "budget_label",
+      "label": "Budget – etikett",
+      "default": "Ungefärlig budget"
+    },
+    {
+      "type": "text",
+      "id": "budget_placeholder",
+      "label": "Budget – platshållartext",
+      "default": "T.ex. 10 000–15 000 kr"
+    },
+    {
+      "type": "header",
+      "content": "Kontaktfält"
+    },
+    {
+      "type": "text",
+      "id": "contact_section_title",
+      "label": "Sektionsrubrik – kontakt",
+      "default": "Dina uppgifter"
+    },
+    {
+      "type": "text",
+      "id": "name_label",
+      "label": "Namn – etikett",
+      "default": "För- och efternamn"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Namn – platshållartext",
+      "default": "Anna Svensson"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "E-post – etikett",
+      "default": "E-post"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "E-post – platshållartext",
+      "default": "email@domän.se"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Telefon – etikett",
+      "default": "Telefonnummer"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Telefon – platshållartext",
+      "default": "+46 70 000 00 00"
+    },
+    {
+      "type": "text",
+      "id": "date_label",
+      "label": "Datum – etikett",
+      "default": "Datum att passa?"
+    },
+    {
+      "type": "text",
+      "id": "date_hint",
+      "label": "Datum – hjälptext",
+      "default": "Har ni planerat in ett datum för förlovning, vigsel eller är det en gåva?"
+    },
+    {
+      "type": "header",
+      "content": "GDPR och skicka"
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_text",
+      "label": "GDPR / Integritetspolicy-text",
+      "default": "Vi skyddar och respekterar din integritet. Dina personuppgifter används endast för att administrera din förfrågan och tillhandahålla begärda produkter och tjänster. Med jämna mellanrum vill vi även kunna kontakta dig angående våra produkter och erbjudanden. Om du ger ditt medgivande till att vi får kontakta dig, markera föredraget kontaktsätt nedan."
+    },
+    {
+      "type": "text",
+      "id": "consent_email",
+      "label": "Samtycke – e-post",
+      "default": "Jag godkänner kontakt via e-post"
+    },
+    {
+      "type": "text",
+      "id": "consent_phone",
+      "label": "Samtycke – telefon",
+      "default": "Jag godkänner kontakt via telefon"
+    },
+    {
+      "type": "text",
+      "id": "required_note",
+      "label": "Text vid obligatoriska fält",
+      "default": "Fält markerade med * är obligatoriska."
+    },
+    {
+      "type": "text",
+      "id": "submit_btn",
+      "label": "Text på skicka-knappen",
+      "default": "Skicka förfrågan"
+    },
+    {
+      "type": "textarea",
+      "id": "success_msg",
+      "label": "Bekräftelsemeddelande efter inskick",
+      "default": "Tack för din förfrågan! Vi återkommer inom 2 arbetsdagar med en personlig offert."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Design Your Own Ring"
+    }
+  ]
+}
+{% endschema %}

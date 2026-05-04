@@ -1,0 +1,114 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "custom_hero_6QfLAK": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "image": "shopify://shop_images/Mask_group_1.png",
+        "height": 50,
+        "overlay_opacity": 0,
+        "heading": "Our ring care guide",
+        "subheading": "",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_text_image_7JyatM": {
+      "type": "custom-text-image",
+      "name": "Text & Image",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "",
+        "text": "<p>Since your ring should last forever it is important to take care of it in the best possible way. Jewelry is often designed to be neat and beautiful due to accentuate the diamonds and its characteristics. When it comes to jewelry set with diamonds it is particularly important to keep an eye on the diamonds and the claws holding them. The slightest impact can affect the quality very easily.</p><p>When a ring gets damaged it is common that there is not a particular activity that caused this. However, it is often the everyday wear of the ring that tears the most. It is common to believe that an ordinary work with a lot of time spent at an office or likewise is completely safe for a ring but in fact, this is one of the professions that tears a lot on the rings different components. Many do believe that a harmless activity such as \"clap your hands\" won't affect the ring but it can actually tear quite a lot. Each tap is a small pressure on the ring and over time it will be a pressure against the claws that hold the diamonds. It is also common to get stuck in textiles with a claw which makes them change from their original position. One should also remember not to grab things so that the ring hits another surface, such as when grabbing a door handle or driving a car.</p><p>Something that is particularly important is to pay attention to the claws if you wear a ring set with side stones. This is because a ring set with side stones is more sensitive than a ring with a plain shank. Therefore, if you have a diamond ring set with side stones we recommend a more continuous check of the diamonds so that they stay in place during a long time of daily use. We offer this service for free where we tighten the prongs and polish the ring. Please contact us and we will gladly help you.</p>",
+        "padding_top": 44,
+        "padding_bottom": 0
+      }
+    },
+    "custom_text_image_eJpNAc": {
+      "type": "custom-text-image",
+      "name": "Text & Image",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "Our recommendation is to not use the ring during physical activity, for example during following occasions",
+        "text": "<p>• While bathing</p><p>• While making the dishes</p><p>• When you're asleep</p><p>• While gardening</p><p>• When cleaning, especially when using cleaning products.</p><p>• While working out.</p>",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_text_image_NwYNck": {
+      "type": "custom-text-image",
+      "name": "Text & Image",
+      "settings": {
+        "background_color": "#fbf9ee",
+        "heading": "General about the durability of wedding and engagement rings",
+        "text": "<h4>Rings in yellow gold</h4><p>Are rings made of yellow gold durable? Yellow gold is a relatively soft metal making rings in this metal a little more sensitive. If the setting is also made of yellow gold, it is especially important to look over the ring, as it is a soft metal as previously mentioned. We usually recommend our customers to make the setting for solitaire rings in platinum for rings made in yellow gold for best durability.</p><h4>Rings in White Gold</h4><p>Rings crafted in white gold naturally have a slightly grayish hue. To achieve the bright, silvery finish that defines white gold, all our white gold rings are rhodium-plated. Rhodium plating is a surface treatment, which means the layer gradually wears off over time. As it does, the ring may begin to appear a little gray again. Scratches can also make the difference more noticeable, since the natural white gold beneath contrasts with the rhodium surface.</p><p>When signs of wear appear — and ideally before — we recommend sending your ring in for polishing and a fresh rhodium plating. The rate at which the plating fades depends on your lifestyle and how much wear the ring is exposed to. For rings that face tougher conditions, the surface will naturally wear more quickly. At VANBRUUN, we offer complimentary rhodium plating for life. The only cost to you is the shipping.</p><p>A white gold ring does require a little more care than, for example, a yellow gold ring, but it is unquestionably worth it to preserve its beauty for many years to come. We recommend maintaining it by gently cleaning the ring once a month with soap, water, and a soft toothbrush — and by sending it to us for inspection and professional cleaning whenever needed.</p><h4>Rings in Platinum</h4><p>Platinum is an exceptionally durable metal that requires no maintenance in the way white gold does. In other words, platinum naturally retains its bright, white color without rhodium plating. And even if a platinum ring develops small marks over time, they are less noticeable since the metal has the same color all the way through. That said, we still recommend occasional maintenance — such as checking the prongs if the ring is set with diamonds, and polishing to remove the natural scratches that occur with daily wear.</p>",
+        "padding_top": 0,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_hero_6QfLAK",
+    "custom_text_image_7JyatM",
+    "custom_text_image_eJpNAc",
+    "custom_text_image_NwYNck"
+  ]
+}

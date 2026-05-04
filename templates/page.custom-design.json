@@ -1,0 +1,130 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "custom_hero_CTzg9Q": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "image": "shopify://shop_images/Illustration.png",
+        "height": 45,
+        "overlay_opacity": 35,
+        "heading": "Designa din egna ring",
+        "subheading": "Varje ring börjar med en vision. Fyll i formuläret nedan så återkommer vi inom 2 arbetsdagar med en personlig offert.",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_design_your_ring_BcGzyA": {
+      "type": "custom-design-your-ring",
+      "name": "Design Your Own Ring",
+      "settings": {
+        "background_color": "#ffffff",
+        "eyebrow": "Skräddarsydda smycken",
+        "heading_start": "Designa din",
+        "heading_em": "egna",
+        "heading_end": "ring",
+        "intro_text": "Varje ring börjar med en vision. Fyll i formuläret nedan så återkommer vi inom 2 arbetsdagar med en personlig offert.",
+        "step1_title": "Skicka in din idé",
+        "step1_desc": "Fyll i formuläret med bilder och önskemål.",
+        "step2_title": "Konsultation",
+        "step2_desc": "Vår guldsmed kontaktar dig för att diskutera detaljer.",
+        "step3_title": "Skapandet",
+        "step3_desc": "Din ring tillverkas för hand med omsorg om varje detalj.",
+        "design_section_title": "Din design",
+        "desc_label": "Beskrivning",
+        "desc_hint": "Här beskriver du hur du önskar din design. Har du specifika mått eller detaljer?",
+        "desc_placeholder": "T.ex. en solitärring med oval diamant i gult guld, slank skena, ca 1,5 karat...",
+        "metal_label": "Välj en metall",
+        "metal_placeholder": "— Välj metall —",
+        "diamond_label": "Önskar du naturliga eller labbodlade diamanter?",
+        "diamond_hint": "För diamantsmycken",
+        "diamond_natural": "Naturliga",
+        "diamond_lab": "Labbodlade",
+        "diamond_unknown": "Vet ej",
+        "images_label": "Inspirationsbilder (max 3 st)",
+        "images_hint": "Ladda upp foton, skisser eller Pinterest-bilder som faller dig i smaken.",
+        "refs_label": "Referenslänkar",
+        "refs_hint": "Inspiration på designs som faller er i smaken (Pinterest, Instagram, webbsidor...)",
+        "refs_placeholder": "https://pinterest.com/...",
+        "budget_label": "Ungefärlig budget",
+        "budget_placeholder": "T.ex. 10 000–15 000 kr",
+        "contact_section_title": "Dina uppgifter",
+        "name_label": "För- och efternamn",
+        "name_placeholder": "Anna Svensson",
+        "email_label": "E-post",
+        "email_placeholder": "email@domän.se",
+        "phone_label": "Telefonnummer",
+        "phone_placeholder": "+46 70 000 00 00",
+        "date_label": "Datum att passa?",
+        "date_hint": "Har ni planerat in ett datum för förlovning, vigsel eller är det en gåva?",
+        "privacy_text": "Vi skyddar och respekterar din integritet. Dina personuppgifter används endast för att administrera din förfrågan och tillhandahålla begärda produkter och tjänster. Med jämna mellanrum vill vi även kunna kontakta dig angående våra produkter och erbjudanden. Om du ger ditt medgivande till att vi får kontakta dig, markera föredraget kontaktsätt nedan.",
+        "consent_email": "Jag godkänner kontakt via e-post",
+        "consent_phone": "Jag godkänner kontakt via telefon",
+        "required_note": "Fält markerade med * är obligatoriska.",
+        "submit_btn": "Skicka förfrågan",
+        "success_msg": "Tack för din förfrågan! Vi återkommer inom 2 arbetsdagar med en personlig offert."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_hero_CTzg9Q",
+    "custom_design_your_ring_BcGzyA"
+  ]
+}

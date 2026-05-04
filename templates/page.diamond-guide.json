@@ -116,11 +116,11 @@
       "settings": {
         "background_color": "#f3f1e3",
         "heading": "The 4 C's",
-        "text": "<p>A diamond is graded based on four parameters known as the 4 C's. Together, they determine the appearance and pricing of a diamond. Read on to learn more about the 4 Cs.<br/><br/></p>",
+        "text": "<p>A diamond is graded based on four parameters known as the 4 C's. Together, they determine the appearance and pricing of a diamond. Read on to learn more about the 4 Cs.</p>",
         "button_label": "Learn more",
         "button_link": "",
-        "padding_top": 60,
-        "padding_bottom": 60
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "custom_story_kXNaDA": {
