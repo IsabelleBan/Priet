@@ -44,17 +44,37 @@
 
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link">
-        <span>{{ section.settings.logo_text }}</span>
-      </a>
-    </div>
+    <img src="https://cdn.shopify.com/s/files/1/0999/9437/0391/files/Logo_priet.svg?v=1776233794" alt="{{ section.settings.logo_text }}" width="150" height="50">
+    </a>
+  </div>
 
     <div class="header__right">
       {%- if section.settings.extra_menu != blank -%}
         <nav>
           <ul class="main-menu">
             {%- for link in section.settings.extra_menu.links -%}
-              <li class="menu-item"><a href="{{ link.url }}">{{ link.title | upcase }}</a></li>
-            {%- endfor -%}
+              <li class="menu-item {% if link.links != blank %}has-mega-menu{% endif %}">
+                <a href="{{ link.url }}">{{ link.title | upcase }}</a>
+                {%- if link.links != blank -%}
+                  <div class="mega-menu">
+                    <div class="mega-menu__inner">
+                      <div class="mega-menu__grid">
+                        {%- for childlink in link.links -%}
+                          <div class="mega-menu__column">
+                            <h4 class="mega-menu__title">{{ childlink.title | upcase }}</h4>
+                              <ul>
+                                {%- for grandchildlink in childlink.links -%}
+                                  <li><a href="{{ grandchildlink.url }}">{{ grandchildlink.title | upcase }}</a></li>
+                                {%- endfor -%}
+                              </ul>
+                            </div>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
           </ul>
         </nav>
       {%- endif -%}
