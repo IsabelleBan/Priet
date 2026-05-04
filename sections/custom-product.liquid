@@ -6,17 +6,35 @@
   <div class="custom-product__main">
 
     <!-- IMAGES -->
-    <!-- IMAGES -->
     <div class="custom-product__gallery">
       {%- for image in product.images -%}
-    <div class="custom-product__image-slide">
-      <img src="{{ image | image_url: width: 1200 }}" 
-           alt="{{ image.alt | escape }}" 
-           width="{{ image.width }}"
-           height="{{ image.height }}"
-           loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
-        </div>
-          {%- endfor -%}
+  {%- assign data_finish = '' -%}
+  {%- assign data_width = '' -%}
+  {%- assign alt_lower = image.alt | downcase -%}
+
+  {%- if alt_lower contains 'matte' -%}
+    {%- assign data_finish = 'matte' -%}
+  {%- elsif alt_lower contains 'polished' -%}
+    {%- assign data_finish = 'polished' -%}
+  {%- endif -%}
+
+  {%- assign alt_parts = image.alt | split: ',' -%}
+  {%- for part in alt_parts -%}
+    {%- if part contains 'mm' -%}
+      {%- assign data_width = part | strip | downcase -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <div class="custom-product__image-slide"
+    {% if data_finish != '' %}data-finish="{{ data_finish }}"{% endif %}
+    {% if data_width != '' %}data-width="{{ data_width }}"{% endif %}>
+    <img src="{{ image | image_url: width: 1200 }}"
+         alt="{{ image.alt | escape }}"
+         width="{{ image.width }}"
+         height="{{ image.height }}"
+         loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+  </div>
+{%- endfor -%}
         </div>
 
     <!-- INFO -->
@@ -73,39 +91,69 @@
           </div>
         {%- endif -%}
 
-        <!-- DIAMANT -->
-        <div class="custom-product__option">
-  <p class="custom-product__option-label">CHOOSE YOUR DIAMOND FAVOURITE</p>
-  <div class="custom-product__diamond-options">
-    <a href="/pages/choose-diamond?variant={{ product.selected_or_first_available_variant.id }}&ring={{ product.title | handle }}" 
-       class="custom-product__diamond-btn active" 
-       style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
-        <line x1="12" y1="2" x2="12" y2="22"></line>
-        <line x1="2" y1="8.5" x2="22" y2="8.5"></line>
-      </svg>
-      CHOOSE DIAMOND
-    </a>
-  </div>
-</div>
+            <!-- YTFINISH -->
+        {%- if product.tags contains 'has-finish' -%}
+      <div class="custom-product__option">
+    <p class="custom-product__option-label">CHOOSE YOUR FINISH</p>
+      <div class="custom-product__finish-options">
+        {%- assign finishes = 'polished,matte' | split: ',' -%}
+{%- for f in finishes -%}
+  <button type="button" 
+          class="custom-product__finish-btn {% if forloop.first %}active{% endif %}" 
+          data-finish="{{ f }}">
+    {{ f | capitalize }}
+  </button>
+{%- endfor -%}
+      </div>
+      <input type="hidden" name="properties[Finish]" id="finish-choice" value="polished">
+    </div>
+    {%- endif -%}
+
+       {%- if product.tags contains 'has-diamond' -%}
+    <!-- DIAMANT -->
+    <div class="custom-product__option">
+      <p class="custom-product__option-label">CHOOSE YOUR DIAMOND FAVOURITE</p>
+      <div class="custom-product__diamond-options">
+        <a href="/pages/choose-diamond?variant={{ product.selected_or_first_available_variant.id }}&ring={{ product.title | handle }}" 
+          class="custom-product__diamond-btn active" 
+          style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+            <line x1="12" y1="2" x2="12" y2="22"></line>
+            <line x1="2" y1="8.5" x2="22" y2="8.5"></line>
+          </svg>
+          CHOOSE DIAMOND
+        </a>
+      </div>
+    </div>
+    {%- endif -%}
 
         <!-- BREDD (visas om taggen has-width finns) -->
         {%- if product.tags contains 'has-width' -%}
-        <div class="custom-product__option">
-          <p class="custom-product__option-label">Width</p>
-          <div class="custom-product__width-options">
-            {%- assign widths = '1.5 mm,2.0 mm,2.5 mm,3.0 mm' | split: ',' -%}
-            {%- for w in widths -%}
-              <button type="button" class="custom-product__width-btn {% if forloop.first %}active{% endif %}" data-width="{{ w }}">
-                <span class="custom-product__width-line" style="height: {{ forloop.index | times: 1 | plus: 1 }}px;"></span>
-                <span class="custom-product__width-label">{{ w }}</span>
+  <div class="custom-product__option">
+    <p class="custom-product__option-label">Width</p>
+    <div class="custom-product__width-options">
+      {%- assign seen_widths = '' -%}
+      {%- for image in product.images -%}
+        {%- assign alt_parts = image.alt | split: ',' -%}
+        {%- for part in alt_parts -%}
+          {%- if part contains 'mm' -%}
+            {%- assign width_val = part | strip -%}
+            {%- unless seen_widths contains width_val -%}
+              {%- assign seen_widths = seen_widths | append: width_val | append: ',' -%}
+              <button type="button"
+                      class="custom-product__width-btn"
+                      data-width="{{ width_val | downcase }}">
+                {{ width_val }}
               </button>
-            {%- endfor -%}
-          </div>
-          <input type="hidden" name="properties[Width]" id="width-choice" value="1.5 mm">
-        </div>
-        {%- endif -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+    <input type="hidden" name="properties[Width]" id="width-choice" value="">
+  </div>
+{%- endif -%}
 
         <!-- ANTAL DIAMANTER (visas om taggen has-diamond-count finns) -->
         {%- if product.tags contains 'has-diamond-count' -%}
@@ -838,6 +886,32 @@
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0,0,0,0.3);
 }
 
+.custom-product__finish-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.custom-product__finish-btn {
+  padding: 10px 20px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  color: #000000;
+}
+
+.custom-product__finish-btn.active {
+  border-color: #000000;
+  background: #000000;
+  color: #fff;
+}
+
 @media screen and (max-width: 1800px) {
   .custom-product__main {
     padding: 60px 140px 100px;
@@ -927,15 +1001,69 @@
     });
   });
 
-  // ACCORDIONS
-  document.querySelectorAll('.custom-product__accordion-header').forEach(function(header) {
-    header.addEventListener('click', function() {
-      var body = this.nextElementSibling;
-      var isOpen = this.classList.contains('open');
-      this.classList.toggle('open', !isOpen);
-      body.style.display = isOpen ? 'none' : 'block';
-    });
+  // FINISH + WIDTH FILTRERING
+var finishInput = document.getElementById('finish-choice');
+var widthInput = document.getElementById('width-choice');
+var allSlides = document.querySelectorAll('.custom-product__image-slide');
+
+var selectedFinish = finishInput ? finishInput.value.toLowerCase() : null;
+var selectedWidth = null;
+
+// Sätt första width-knappen som aktiv vid sidladdning
+var firstWidthBtn = document.querySelector('.custom-product__width-btn');
+if (firstWidthBtn) {
+  firstWidthBtn.classList.add('active');
+  selectedWidth = firstWidthBtn.getAttribute('data-width');
+  if (widthInput) widthInput.value = selectedWidth;
+}
+
+function filterImages() {
+  allSlides.forEach(function(slide) {
+    var slideFinish = slide.getAttribute('data-finish');
+    var slideWidth = slide.getAttribute('data-width');
+
+    if (!slideFinish && !slideWidth) {
+      slide.style.display = 'block';
+      return;
+    }
+
+    var finishMatch = !slideFinish || !selectedFinish || slideFinish === selectedFinish;
+    var widthMatch = !slideWidth || !selectedWidth || slideWidth === selectedWidth;
+
+    slide.style.display = (finishMatch && widthMatch) ? 'block' : 'none';
   });
+}
+
+// FINISH-knappar
+document.querySelectorAll('.custom-product__finish-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.custom-product__finish-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    this.classList.add('active');
+    var finish = this.getAttribute('data-finish');
+    if (finishInput) finishInput.value = finish;
+    selectedFinish = finish.toLowerCase();
+    filterImages();
+  });
+}); 
+
+// WIDTH-knappar
+document.querySelectorAll('.custom-product__width-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.custom-product__width-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    this.classList.add('active');
+    var width = this.getAttribute('data-width');
+    if (widthInput) widthInput.value = width;
+    selectedWidth = width.toLowerCase().replace(' ', '');
+    filterImages();
+  });
+});
+
+// Kör filtrering vid sidladdning
+filterImages();
 
   // ADD TO CART + SIZE ADJUSTMENT
   var SIZE_ADJUSTMENT_VARIANT_ID = 53104121774423;
