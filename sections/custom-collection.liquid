@@ -41,17 +41,25 @@
         <div class="custom-collection-card" data-tags="{{ product.tags | join: ',' | downcase }}">
   <a href="{{ product.url }}" class="custom-collection-card__link">
     <div class="custom-collection-card__image-wrapper">
-      {%- if product.featured_image -%}
-        {{ product.featured_image | image_url: width: 800 | image_tag:
-          widths: '400, 600, 800',
-          class: 'custom-collection-card__image',
-          loading: 'lazy',
-          alt: product.title
-        }}
-      {%- else -%}
-        {{ 'product-1' | placeholder_svg_tag: 'custom-collection-card__image placeholder-svg' }}
-      {%- endif -%}
-    </div>
+  {%- if product.featured_image -%}
+    {{ product.featured_image | image_url: width: 800 | image_tag:
+      widths: '400, 600, 800',
+      class: 'custom-collection-card__image custom-collection-card__image--primary',
+      loading: 'lazy',
+      alt: product.title
+    }}
+    {%- if product.images[1] -%}
+      {{ product.images[1] | image_url: width: 800 | image_tag:
+        widths: '400, 600, 800',
+        class: 'custom-collection-card__image custom-collection-card__image--hover',
+        loading: 'lazy',
+        alt: product.title
+      }}
+    {%- endif -%}
+  {%- else -%}
+    {{ 'product-1' | placeholder_svg_tag: 'custom-collection-card__image placeholder-svg' }}
+  {%- endif -%}
+</div>
     <div class="custom-collection-card__info">
       <h3 class="custom-collection-card__title">{{ product.title | upcase }}</h3>
       <p class="custom-collection-card__price">From {{ product.price_min | money }}</p>
@@ -517,6 +525,27 @@
 
 .custom-collection-card__variant:not(.active):hover {
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0,0,0,0.3);
+}
+
+.custom-collection-card__image--hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-collection-card__image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-collection-card__image-wrapper:hover .custom-collection-card__image--hover {
+  opacity: 1;
+}
+
+.custom-collection-card__image-wrapper:hover .custom-collection-card__image--primary {
+  opacity: 0;
 }
 
 @media screen and (max-width: 1800px) {
