@@ -110,23 +110,85 @@
     {%- endif -%}
 
        {%- if product.tags contains 'has-diamond' -%}
-    <!-- DIAMANT -->
-    <div class="custom-product__option">
-      <p class="custom-product__option-label">CHOOSE YOUR DIAMOND FAVOURITE</p>
-      <div class="custom-product__diamond-options">
-        <a href="/pages/choose-diamond?variant={{ product.selected_or_first_available_variant.id }}&ring={{ product.title | handle }}" 
-          class="custom-product__diamond-btn active" 
-          style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
-            <line x1="12" y1="2" x2="12" y2="22"></line>
-            <line x1="2" y1="8.5" x2="22" y2="8.5"></line>
-          </svg>
-          CHOOSE DIAMOND
-        </a>
-      </div>
+
+<!-- ── Välj från databasen ── -->
+<div class="custom-product__option">
+  <p class="custom-product__option-label">NATURAL OR LAB GROWN?</p>
+  <div class="custom-product__diamond-type-options">
+    <button type="button" class="custom-product__diamond-type-btn active" data-type="lab">LAB GROWN</button>
+    <button type="button" class="custom-product__diamond-type-btn" data-type="natural">NATURAL</button>
+  </div>
+</div>
+
+<div class="custom-product__option">
+  <p class="custom-product__option-label">SHAPE</p>
+  <div class="custom-product__shape-options">
+    {%- assign shapes = 'ROUND,OVAL,CUSHION,PRINCESS,EMERALD,RADIANT,ASSCHER,PEAR,HEART,MARQUISE' | split: ',' -%}
+    {%- for shape in shapes -%}
+      <button type="button"
+        class="custom-product__shape-btn {% if forloop.first %}active{% endif %}"
+        data-shape="{{ shape }}">
+        {{ shape }}
+      </button>
+    {%- endfor -%}
+  </div>
+</div>
+
+<div class="custom-product__option">
+  <a id="choose-diamond-btn"
+    href="/pages/choose-diamond?variant={{ product.selected_or_first_available_variant.id }}&ring={{ product.handle }}&type=lab&shape=ROUND&carat=1.00"
+    class="custom-product__diamond-btn active"
+    style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+      <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+      <line x1="12" y1="2" x2="12" y2="22"></line>
+      <line x1="2" y1="8.5" x2="22" y2="8.5"></line>
+    </svg>
+    CHOOSE DIAMOND
+  </a>
+</div>
+
+<!-- ── Separator ── -->
+<div class="custom-product__diamond-separator">
+  
+</div>
+
+<!-- ── Standardval – Round ── -->
+<div class="custom-product__standard-diamond">
+  <p class="custom-product__option-label">ROUND LAB GROWN – STANDARDVAL</p>
+  <p class="custom-product__hint">Välj carat och kvalitet för en rund labbodlad diamant.</p>
+
+  <div class="custom-product__option">
+    <p class="custom-product__option-label" style="margin-top: 1rem;">CARAT</p>
+    <div class="custom-product__carat-options">
+      <button type="button" class="custom-product__carat-btn active" data-carat="0.50">0.50ct</button>
+      <button type="button" class="custom-product__carat-btn" data-carat="1.00">1.00ct</button>
+      <button type="button" class="custom-product__carat-btn" data-carat="1.50">1.50ct</button>
+      <button type="button" class="custom-product__carat-btn" data-carat="2.00">2.00ct</button>
     </div>
-    {%- endif -%}
+  </div>
+
+  <div class="custom-product__option">
+    <p class="custom-product__option-label">KVALITET</p>
+    <div class="custom-product__quality-options">
+      <button type="button" class="custom-product__quality-btn active" data-quality="good">
+        <span class="quality-title">Bra</span>
+        <span class="quality-detail">H / SI1</span>
+      </button>
+      <button type="button" class="custom-product__quality-btn" data-quality="very-good">
+        <span class="quality-title">Mycket bra</span>
+        <span class="quality-detail">F / VVS2</span>
+      </button>
+      <button type="button" class="custom-product__quality-btn" data-quality="perfect">
+        <span class="quality-title">Perfekt</span>
+        <span class="quality-detail">D / IF-FL</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="diamond-variant-id" name="properties[Diamond]" value="">
+{%- endif -%}
 
         <!-- BREDD (visas om taggen has-width finns) -->
         {%- if product.tags contains 'has-width' -%}
@@ -375,11 +437,11 @@
   background-color: #FBF9EE;
 }
 
+/* ── Layout ── */
 .custom-product__main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
- 
   margin: 0 auto;
   padding: 60px 160px 100px;
   box-sizing: border-box;
@@ -411,11 +473,11 @@
   overflow: hidden;
 }
 
+/* ── Gallery ── */
 .custom-product__gallery {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  position: sticky;
   top: 0;
   align-self: start;
 }
@@ -444,11 +506,12 @@
 .custom-product__thumb img { width: 100%; height: 100%; object-fit: contain; }
 
 .custom-product__main-image { flex: 1; }
+
 .custom-product__image-slide {
   width: 100%;
   background: rgb(248, 248, 248);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
-.custom-product__image-slide.active { display: block; }
 
 .custom-product__image-slide img {
   width: 100%;
@@ -457,7 +520,13 @@
   object-fit: cover;
 }
 
-.custom-product__info { padding-top: 10px; }
+/* ── Info ── */
+.custom-product__info {
+  padding-top: 10px;
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
 
 .custom-product__collection {
   font-family: 'Jost', sans-serif;
@@ -495,6 +564,7 @@
   margin-bottom: 32px;
 }
 
+/* ── Options ── */
 .custom-product__option { margin-bottom: 28px; }
 
 .custom-product__option-label {
@@ -502,7 +572,7 @@
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #000000;
+  color: #000;
   margin: 0 0 12px;
 }
 
@@ -514,41 +584,143 @@
   letter-spacing: 0;
 }
 
-.custom-product__option-btns {
+/* ── Shared button base ── */
+.custom-product__option-btn,
+.custom-product__finish-btn,
+.custom-product__diamond-type-btn,
+.custom-product__shape-btn,
+.custom-product__carat-btn {
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  color: #000;
+}
+
+.custom-product__option-btn.active,
+.custom-product__finish-btn.active,
+.custom-product__diamond-type-btn.active,
+.custom-product__shape-btn.active,
+.custom-product__carat-btn.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* Metal option active has different style */
+.custom-product__option-btn.active {
+  border-color: #f3f1e3;
+}
+
+/* ── Option button groups ── */
+.custom-product__option-btns,
+.custom-product__finish-options {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.custom-product__option-btn {
+.custom-product__option-btn,
+.custom-product__finish-btn {
   padding: 10px 20px;
+}
+
+/* ── Diamond type ── */
+.custom-product__diamond-type-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-width: 450px;
+}
+
+.custom-product__diamond-type-btn {
+  padding: 14px 20px;
+}
+
+/* ── Shape ── */
+.custom-product__shape-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-width: 450px;
+}
+
+.custom-product__shape-btn {
+  padding: 14px 20px;
+  text-align: center;
+}
+
+/* ── Carat ── */
+.custom-product__carat-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  max-width: 450px;
+}
+
+.custom-product__carat-btn {
+  padding: 14px 10px;
+  text-align: center;
+}
+
+/* ── Quality ── */
+.custom-product__quality-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 450px;
+}
+
+.custom-product__quality-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 10px;
   border: 1px solid rgba(0,0,0,0.15);
   background: #fff;
   font-family: 'Jost', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 4px;
-  color: #000000;
+  color: #000;
+  text-align: left;
 }
 
-.custom-product__option-btn.active {
-  border-color: #f3f1e3;
-  background: #000000;
+.custom-product__quality-btn.active {
+  background: #000;
   color: #fff;
+  border-color: #000;
 }
 
-.custom-product__diamond-options { display: flex; gap: 10px; flex-wrap: wrap; }
+.quality-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
+.quality-detail {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+/* ── Choose Diamond btn ── */
 .custom-product__diamond-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 10px 20px;
-  border: 1px solid rgba(0,0,0,0.15);
-  background: #fff;
+  padding: 14px 20px;
+  width: 100%;
+  max-width: 450px;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
   font-family: 'Jost', sans-serif;
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -556,16 +728,9 @@
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 4px;
-  color: #000000;
 }
 
-.custom-product__diamond-btn.active {
-  border-color: #000000;
-  background: #000000;
-  color: #fff;
-}
-
-/* WIDTH */
+/* ── Width ── */
 .custom-product__width-options {
   display: flex;
   gap: 10px;
@@ -590,8 +755,7 @@
 }
 
 .custom-product__width-btn.active {
-  border-color: #000000;
-  background: #fff;
+  border-color: #000;
 }
 
 .custom-product__width-line {
@@ -610,7 +774,7 @@
   white-space: nowrap;
 }
 
-/* RADIO */
+/* ── Radio ── */
 .custom-product__radio-options {
   display: flex;
   flex-direction: column;
@@ -629,9 +793,7 @@
   color: #1a1a1a;
 }
 
-.custom-product__radio-input {
-  display: none;
-}
+.custom-product__radio-input { display: none; }
 
 .custom-product__radio-custom {
   width: 18px;
@@ -659,12 +821,12 @@
   border-radius: 50%;
 }
 
-/* SELECT */
+/* ── Select ── */
 .custom-product__select-wrapper {
   position: relative;
   display: inline-block;
   width: 100%;
-  max-width: 300px;
+  max-width: 450px;
 }
 
 .custom-product__select {
@@ -675,7 +837,7 @@
   font-family: 'Jost', sans-serif;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: #000000;
+  color: #000;
   appearance: none;
   cursor: pointer;
   border-radius: 4px;
@@ -688,19 +850,20 @@
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #000000;
+  color: #000;
 }
 
+/* ── Engraving ── */
 .custom-product__engraving {
   width: 100%;
-  max-width: 300px;
+  max-width: 450px;
   padding: 12px 16px;
   border: 1px solid rgba(0,0,0,0.15);
   background: #fff;
   font-family: 'Jost', sans-serif;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: #000000;
+  color: #000;
   border-radius: 4px;
   outline: none;
   box-sizing: border-box;
@@ -716,11 +879,12 @@
   margin: 6px 0 0;
 }
 
+/* ── Add to bag ── */
 .custom-product__add-btn {
   width: 100%;
-  max-width: 300px;
+  max-width: 450px;
   padding: 16px;
-  background: #000000;
+  background: #000;
   color: #fff;
   border: none;
   font-family: 'Jost', sans-serif;
@@ -735,6 +899,7 @@
 
 .custom-product__add-btn:hover { opacity: 0.8; }
 
+/* ── Accordion ── */
 .custom-product__accordions { margin-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); }
 .custom-product__accordion { border-bottom: 1px solid rgba(0,0,0,0.08); }
 
@@ -768,6 +933,7 @@
 
 .custom-product__accordion-body p { margin: 0; }
 
+/* ── Related ── */
 .custom-product__related { margin-bottom: 80px; }
 .custom-product__related:last-child { margin-bottom: 0; }
 
@@ -794,7 +960,6 @@
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -853,6 +1018,7 @@
 
 .custom-product__mid-hero-image { width: 100%; height: 100%; object-fit: cover; }
 
+/* ── Variants (gold color dots) ── */
 .custom-product__variants {
   display: flex;
   gap: 10px;
@@ -869,14 +1035,8 @@
   cursor: pointer;
 }
 
-.custom-product__variant--yellow {
-  background-color: #D4AF37;
-}
-
-.custom-product__variant--white {
-  background-color: #E8E8E8;
-  border: 1px solid #C0C0C0;
-}
+.custom-product__variant--yellow { background-color: #D4AF37; }
+.custom-product__variant--white { background-color: #E8E8E8; border: 1px solid #C0C0C0; }
 
 .custom-product__variant.active {
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px #1a1a1a;
@@ -886,36 +1046,9 @@
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0,0,0,0.3);
 }
 
-.custom-product__finish-options {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.custom-product__finish-btn {
-  padding: 10px 20px;
-  border: 1px solid rgba(0,0,0,0.15);
-  background: #fff;
-  font-family: 'Jost', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-radius: 4px;
-  color: #000000;
-}
-
-.custom-product__finish-btn.active {
-  border-color: #000000;
-  background: #000000;
-  color: #fff;
-}
-
+/* ── Responsive ── */
 @media screen and (max-width: 1800px) {
-  .custom-product__main {
-    padding: 60px 140px 100px;
-  }
+  .custom-product__main { padding: 60px 140px 100px; }
 }
 
 @media screen and (max-width: 989px) {
@@ -923,7 +1056,6 @@
     grid-template-columns: 1fr;
     gap: 30px;
     padding: 30px 16px 60px;
-    margin-bottom: 0;
   }
 
   .custom-product__sections { padding: 40px 0; }
@@ -942,7 +1074,7 @@
 
   .custom-product__gallery {
     gap: 15px !important;
-    position: static; 
+    position: static;
   }
 
   .custom-product__thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
@@ -952,13 +1084,19 @@
 
   .custom-product__add-btn,
   .custom-product__select-wrapper,
-  .custom-product__engraving { max-width: 100%; }
+  .custom-product__engraving,
+  .custom-product__diamond-type-options,
+  .custom-product__shape-options,
+  .custom-product__carat-options,
+  .custom-product__quality-options,
+  .custom-product__diamond-btn { max-width: 100%; }
 }
+
 {% endstylesheet %}
 
 <script>
 (function() {
- 
+
   // VARIANT SELECTION
   var selectedOptions = {};
   var productData = {{ product.variants | json }};
@@ -991,84 +1129,172 @@
     });
   });
 
-  // WIDTH-knappar
+  // FINISH + WIDTH FILTRERING
+  var finishInput = document.getElementById('finish-choice');
   var widthInput = document.getElementById('width-choice');
+  var allSlides = document.querySelectorAll('.custom-product__image-slide');
+  var selectedFinish = finishInput ? finishInput.value.toLowerCase() : null;
+  var selectedWidth = null;
+
+  var firstWidthBtn = document.querySelector('.custom-product__width-btn');
+  if (firstWidthBtn) {
+    firstWidthBtn.classList.add('active');
+    selectedWidth = firstWidthBtn.getAttribute('data-width');
+    if (widthInput) widthInput.value = selectedWidth;
+  }
+
+  function filterImages() {
+    allSlides.forEach(function(slide) {
+      var slideFinish = slide.getAttribute('data-finish');
+      var slideWidth = slide.getAttribute('data-width');
+      if (!slideFinish && !slideWidth) { slide.style.display = 'block'; return; }
+      var finishMatch = !slideFinish || !selectedFinish || slideFinish === selectedFinish;
+      var widthMatch = !slideWidth || !selectedWidth || slideWidth === selectedWidth;
+      slide.style.display = (finishMatch && widthMatch) ? 'block' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.custom-product__finish-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.custom-product__finish-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      var finish = this.getAttribute('data-finish');
+      if (finishInput) finishInput.value = finish;
+      selectedFinish = finish.toLowerCase();
+      filterImages();
+    });
+  });
+
   document.querySelectorAll('.custom-product__width-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.custom-product__width-btn').forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
-      if (widthInput) widthInput.value = this.getAttribute('data-width');
+      var width = this.getAttribute('data-width');
+      if (widthInput) widthInput.value = width;
+      selectedWidth = width.toLowerCase().replace(' ', '');
+      filterImages();
     });
   });
 
-  // FINISH + WIDTH FILTRERING
-var finishInput = document.getElementById('finish-choice');
-var widthInput = document.getElementById('width-choice');
-var allSlides = document.querySelectorAll('.custom-product__image-slide');
+  // ACCORDION
+  document.querySelectorAll('.custom-product__accordion-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      var body = this.nextElementSibling;
+      var isOpen = this.classList.contains('open');
+      document.querySelectorAll('.custom-product__accordion-header').forEach(function(h) {
+        h.classList.remove('open');
+        h.nextElementSibling.style.display = 'none';
+      });
+      if (!isOpen) {
+        this.classList.add('open');
+        body.style.display = 'block';
+      }
+    });
+  });
 
-var selectedFinish = finishInput ? finishInput.value.toLowerCase() : null;
-var selectedWidth = null;
+  filterImages();
 
-// Sätt första width-knappen som aktiv vid sidladdning
-var firstWidthBtn = document.querySelector('.custom-product__width-btn');
-if (firstWidthBtn) {
-  firstWidthBtn.classList.add('active');
-  selectedWidth = firstWidthBtn.getAttribute('data-width');
-  if (widthInput) widthInput.value = selectedWidth;
-}
+  // DIAMOND SELECTOR
+  var diamondBtn = document.getElementById('choose-diamond-btn');
+  var selectedDiamondType = 'lab';
+  var selectedShape = 'ROUND';
+  var selectedCarat = '0.50';
+  var selectedQuality = 'good';
 
-function filterImages() {
-  allSlides.forEach(function(slide) {
-    var slideFinish = slide.getAttribute('data-finish');
-    var slideWidth = slide.getAttribute('data-width');
+  var diamondVariants = {
+    '0.50': { 'good': 53481640886615, 'very-good': 53481640919383, 'perfect': 53481640952151 },
+    '1.00': { 'good': 53481640984919, 'very-good': 53481641017687, 'perfect': 53481641050455 },
+    '1.50': { 'good': 53481641083223, 'very-good': 53481641115991, 'perfect': 53481641148759 },
+    '2.00': { 'good': 53481641181527, 'very-good': 53481641214295, 'perfect': 53481641247063 },
+  };
 
-    if (!slideFinish && !slideWidth) {
-      slide.style.display = 'block';
-      return;
+  var priceMap = {
+    '0.50': { 'good': 7000, 'very-good': 9000, 'perfect': 11000 },
+    '1.00': { 'good': 20000, 'very-good': 25000, 'perfect': 32000 },
+    '1.50': { 'good': 38000, 'very-good': 48000, 'perfect': 63000 },
+    '2.00': { 'good': 42000, 'very-good': 52000, 'perfect': 67000 },
+  };
+
+  function updateDiamondVariant() {
+    var input = document.getElementById('diamond-variant-id');
+    if (!input) return;
+    if (selectedShape === 'ROUND' && diamondVariants[selectedCarat] && diamondVariants[selectedCarat][selectedQuality]) {
+      input.value = diamondVariants[selectedCarat][selectedQuality];
+    } else {
+      input.value = '';
     }
+  }
 
-    var finishMatch = !slideFinish || !selectedFinish || slideFinish === selectedFinish;
-    var widthMatch = !slideWidth || !selectedWidth || slideWidth === selectedWidth;
+  function updateDiamondUrl() {
+    if (!diamondBtn) return;
+    var variantId = document.getElementById('variant-id').value;
+    var ring = '{{ product.handle }}';
+    diamondBtn.href = '/pages/choose-diamond?variant=' + variantId
+      + '&ring=' + ring
+      + '&type=' + selectedDiamondType
+      + '&shape=' + selectedShape
+      + '&carat=' + selectedCarat;
+  }
 
-    slide.style.display = (finishMatch && widthMatch) ? 'block' : 'none';
-  });
-}
+  function updateDiamondUI() {
+    var standardOption = document.getElementById('standard-diamond-option');
+    var standardQuality = document.getElementById('standard-quality-option');
+    var apiOption = document.getElementById('api-diamond-option');
+    if (selectedShape === 'ROUND') {
+      if (standardOption) standardOption.style.display = 'block';
+      if (standardQuality) standardQuality.style.display = 'block';
+      if (apiOption) apiOption.style.display = 'none';
+    } else {
+      if (standardOption) standardOption.style.display = 'none';
+      if (standardQuality) standardQuality.style.display = 'none';
+      if (apiOption) apiOption.style.display = 'block';
+    }
+    updateDiamondVariant();
+    updateDiamondUrl();
+  }
 
-// FINISH-knappar
-document.querySelectorAll('.custom-product__finish-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.custom-product__finish-btn').forEach(function(b) {
-      b.classList.remove('active');
+  document.querySelectorAll('.custom-product__diamond-type-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.custom-product__diamond-type-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      selectedDiamondType = this.getAttribute('data-type');
+      updateDiamondUrl();
     });
-    this.classList.add('active');
-    var finish = this.getAttribute('data-finish');
-    if (finishInput) finishInput.value = finish;
-    selectedFinish = finish.toLowerCase();
-    filterImages();
   });
-}); 
 
-// WIDTH-knappar
-document.querySelectorAll('.custom-product__width-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.custom-product__width-btn').forEach(function(b) {
-      b.classList.remove('active');
+  document.querySelectorAll('.custom-product__shape-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.custom-product__shape-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      selectedShape = this.getAttribute('data-shape');
+      updateDiamondUI();
     });
-    this.classList.add('active');
-    var width = this.getAttribute('data-width');
-    if (widthInput) widthInput.value = width;
-    selectedWidth = width.toLowerCase().replace(' ', '');
-    filterImages();
   });
-});
 
-// Kör filtrering vid sidladdning
-filterImages();
+  document.querySelectorAll('.custom-product__carat-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.custom-product__carat-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      selectedCarat = this.getAttribute('data-carat');
+      updateDiamondVariant();
+      updateDiamondUrl();
+    });
+  });
 
-  // ADD TO CART + SIZE ADJUSTMENT
+  document.querySelectorAll('.custom-product__quality-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.custom-product__quality-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      selectedQuality = this.getAttribute('data-quality');
+      updateDiamondVariant();
+    });
+  });
+
+  updateDiamondUI();
+
+  // ADD TO CART
   var SIZE_ADJUSTMENT_VARIANT_ID = 53104121774423;
   var SIZE_ADJUSTMENT_FROM_INDEX = 27;
-
   var form = document.getElementById('custom-product-form');
   var sizeSelect = document.getElementById('ring-size-select');
   var addBtn = document.getElementById('add-to-bag');
@@ -1108,12 +1334,28 @@ filterImages();
     e.stopPropagation();
 
     var variantId = parseInt(document.getElementById('variant-id').value);
+    var diamondVariantId = parseInt(document.getElementById('diamond-variant-id').value);
     var needsAdjustment = sizeSelect && sizeSelect.value !== '' && sizeSelect.selectedIndex >= SIZE_ADJUSTMENT_FROM_INDEX;
 
     addBtn.textContent = 'ADDING...';
     addBtn.disabled = true;
 
-    addToCart(variantId, 1, buildProperties())
+    var props = buildProperties();
+    delete props['Diamond'];
+
+    if (selectedShape === 'ROUND' && diamondVariantId) {
+      var qualityLabel = selectedQuality === 'good' ? 'Bra' : selectedQuality === 'very-good' ? 'Mycket bra' : 'Perfekt';
+      var diamondPrice = priceMap[selectedCarat][selectedQuality];
+      props['Diamond'] = selectedCarat + 'ct · ' + qualityLabel + ' · ' + diamondPrice.toLocaleString('sv-SE') + ' kr';
+    }
+
+    addToCart(variantId, 1, props)
+      .then(function() {
+        if (selectedShape === 'ROUND' && diamondVariantId) {
+          return addToCart(diamondVariantId, 1, { '_surcharge': 'true' });
+        }
+        return Promise.resolve();
+      })
       .then(function() {
         if (!needsAdjustment) {
           window.location.href = '/cart';
