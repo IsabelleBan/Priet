@@ -31,7 +31,7 @@
           "settings": {
             "image": "shopify://shop_images/Image_1.png",
             "title": "Engagement rings",
-            "link": "shopify://collections/engagement-rings"
+            "link": "shopify://collections/engagement-rings-yellow-gold"
           }
         },
         "banner_8YRYTe": {
@@ -73,7 +73,7 @@
             "image": "shopify://shop_images/ring1.png",
             "title": "Engagement rings",
             "link_text": "Explore",
-            "link": "shopify://collections/engagement-rings"
+            "link": "shopify://collections/engagement-rings-yellow-gold"
           }
         },
         "cat_wedding": {
