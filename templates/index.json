@@ -39,7 +39,7 @@
           "settings": {
             "image": "shopify://shop_images/Image_2.png",
             "title": "Wedding rings",
-            "link": "shopify://collections/wedding-rings"
+            "link": "shopify://collections/wedding-rings-old"
           }
         },
         "banner_Li9qnH": {
@@ -82,7 +82,7 @@
             "image": "shopify://shop_images/ring2.png",
             "title": "Wedding rings",
             "link_text": "Explore",
-            "link": "shopify://collections/wedding-rings"
+            "link": "shopify://collections/wedding-rings-old"
           }
         },
         "cat_diamonds": {
@@ -247,7 +247,7 @@
       "settings": {
         "heading": "Discover our wedding rings",
         "button_text": "SEE MORE",
-        "button_link": "shopify://collections/wedding-rings",
+        "button_link": "shopify://collections/wedding-rings-old",
         "padding_top": 60,
         "padding_bottom": 40
       }
